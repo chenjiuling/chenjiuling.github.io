@@ -1,0 +1,26 @@
+baseURL = 'https://chenjiung.github.io/'
+languageCode = 'zh-cn'
+title = "chenjiuling - 在阅读中遇见自己"
+theme = "gitHub-style"
+
+[params]
+  author = "chenjiuling"
+  description = "在阅读中遇见自己"
+  github = "chenjiuling"
+  facebook = ""
+  twitter = ""
+  linkedin = ""
+  instagram = ""
+  tumblr = ""
+  email = "chenjie411524@outlook.com"
+  url = "https://github.com/chenjiuling"
+  keywords = "blog, android"
+  rss = false
+  lastmod = true
+  userStatusEmoji = "😀"
+  favicon = "/images/github.png"
+  location = "China"
+
+
+[frontmatter]
+  lastmod = ["lastmod", ":fileModTime", ":default"]
