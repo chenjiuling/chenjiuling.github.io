@@ -1,7 +1,7 @@
 ---
 title: "如何通过hugo和github快速创建个人博客"
 date: 2022-01-01T14:11:54+08:00
-draft: true
+draft: false
 ---
 
 ### 安装Hugo

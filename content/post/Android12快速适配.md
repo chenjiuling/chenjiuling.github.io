@@ -1,7 +1,7 @@
 ---
 title: "Android12快速适配"
 date: 2022-01-01T20:53:24+08:00
-draft: true
+draft: false
 ---
 
 ## 一、android:exported
