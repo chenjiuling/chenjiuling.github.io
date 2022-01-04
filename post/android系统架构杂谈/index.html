@@ -9,37 +9,34 @@
 <link rel=stylesheet href=https://chenjiuling.github.io/css/light.css>
 <link rel=stylesheet href=https://chenjiuling.github.io/css/dark.css>
 <link rel=stylesheet href=https://chenjiuling.github.io/css/syntax.css>
-<title>Android12快速适配 - chenjiuling - 在阅读中遇见自己</title>
+<title>Android系统架构杂谈 - chenjiuling - 在阅读中遇见自己</title>
 <link rel=icon type=image/x-icon href=/images/github.png>
 <meta name=theme-color content="#1e2327">
-<meta name=description content="一、android:exported 它主要是设置 Activity 是否可由其他应用的组件启动， “true” 则表示可以，而“false”表示不可以。
-若为“false”，则 Activity 只能由同一应用的组件或使用同一用户 ID 的不同应用启动。
-当然不止是 Activity， Service 和 Receiver 也会有 exported 的场景。
+<meta name=description content="Android系统构架是安卓系统的体系结构，android的系统架构和其操作系统一样，采用了分层的架构，共分为四层，从高到低分别是Android应用层，Android应用框架层，Android系统运行库层和Linux内核层。
+Android系统构架主要应用于ARM平台，但不仅限于ARM，通过编译控制，在X86、MAC等体系结构的机器上同样可以运行。
 ">
 <meta name=keywords content="blog,android">
 <meta name=robots content="noodp">
-<link rel=canonical href=https://chenjiuling.github.io/post/android12%E5%BF%AB%E9%80%9F%E9%80%82%E9%85%8D/>
+<link rel=canonical href=https://chenjiuling.github.io/post/android%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%9D%82%E8%B0%88/>
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Android12快速适配 - chenjiuling - 在阅读中遇见自己">
-<meta name=twitter:description content="一、android:exported 它主要是设置 Activity 是否可由其他应用的组件启动， “true” 则表示可以，而“false”表示不可以。
-若为“false”，则 Activity 只能由同一应用的组件或使用同一用户 ID 的不同应用启动。
-当然不止是 Activity， Service 和 Receiver 也会有 exported 的场景。
+<meta name=twitter:title content="Android系统架构杂谈 - chenjiuling - 在阅读中遇见自己">
+<meta name=twitter:description content="Android系统构架是安卓系统的体系结构，android的系统架构和其操作系统一样，采用了分层的架构，共分为四层，从高到低分别是Android应用层，Android应用框架层，Android系统运行库层和Linux内核层。
+Android系统构架主要应用于ARM平台，但不仅限于ARM，通过编译控制，在X86、MAC等体系结构的机器上同样可以运行。
 ">
 <meta name=twitter:site content="https://chenjiuling.github.io/">
 <meta name=twitter:creator content>
 <meta name=twitter:image content="https://chenjiuling.github.io/">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android12快速适配 - chenjiuling - 在阅读中遇见自己">
-<meta property="og:description" content="一、android:exported 它主要是设置 Activity 是否可由其他应用的组件启动， “true” 则表示可以，而“false”表示不可以。
-若为“false”，则 Activity 只能由同一应用的组件或使用同一用户 ID 的不同应用启动。
-当然不止是 Activity， Service 和 Receiver 也会有 exported 的场景。
+<meta property="og:title" content="Android系统架构杂谈 - chenjiuling - 在阅读中遇见自己">
+<meta property="og:description" content="Android系统构架是安卓系统的体系结构，android的系统架构和其操作系统一样，采用了分层的架构，共分为四层，从高到低分别是Android应用层，Android应用框架层，Android系统运行库层和Linux内核层。
+Android系统构架主要应用于ARM平台，但不仅限于ARM，通过编译控制，在X86、MAC等体系结构的机器上同样可以运行。
 ">
-<meta property="og:url" content="https://chenjiuling.github.io/post/android12%E5%BF%AB%E9%80%9F%E9%80%82%E9%85%8D/">
-<meta property="og:site_name" content="Android12快速适配">
+<meta property="og:url" content="https://chenjiuling.github.io/post/android%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%9D%82%E8%B0%88/">
+<meta property="og:site_name" content="Android系统架构杂谈">
 <meta property="og:image" content="https://chenjiuling.github.io/">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
-<meta property="article:published_time" content="2022-01-01 20:53:24 +0800 +0800">
+<meta property="article:published_time" content="2022-01-04 22:11:54 +0800 +0800">
 </head>
 <body>
 <div style=position:relative>
@@ -90,11 +87,11 @@
 <div class="d-flex flex-column">
 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
 <span class=author>
-<a href=https://chenjiuling.github.io/>chenjiuling</a></span><span class=path-divider>/</span><strong class="css-truncate-target mr-1" style=max-width:410px><a href=https://chenjiuling.github.io/post/android12%E5%BF%AB%E9%80%9F%E9%80%82%E9%85%8D/>Android12快速适配</a></strong>
+<a href=https://chenjiuling.github.io/>chenjiuling</a></span><span class=path-divider>/</span><strong class="css-truncate-target mr-1" style=max-width:410px><a href=https://chenjiuling.github.io/post/android%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E6%9D%82%E8%B0%88/>Android系统架构杂谈</a></strong>
 </h1>
 <div class="note m-0">
-Created <relative-time datetime="Sat, 01 Jan 2022 20:53:24 +0800" class=no-wrap>
-Sat, 01 Jan 2022 20:53:24 +0800</relative-time>
+Created <relative-time datetime="Tue, 04 Jan 2022 22:11:54 +0800" class=no-wrap>
+Tue, 04 Jan 2022 22:11:54 +0800</relative-time>
 <span class=file-info-divider></span>
 Modified <relative-time datetime="Tue, 04 Jan 2022 14:29:54 +0000" class=no-wrap>
 Tue, 04 Jan 2022 14:29:54 +0000</relative-time>
@@ -115,37 +112,69 @@ Tue, 04 Jan 2022 14:29:54 +0000</relative-time>
 <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
 <summary id=toc-toggle class="btn btn-octicon m-0 mr-2 p-2" aria-haspopup=menu aria-label="Table of Contents" role=button><svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered"><path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zM3 8A1 1 0 111 8a1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
 </summary>
-547 Words
+1595 Words
 </div>
 <div class="file-actions flex-order-2 pt-0">
 </div>
 </div>
 </div>
 <div class="Box-body px-5 pb-5">
-<article class="markdown-body entry-content container-lg"><h2 id=一androidexported>一、android:exported</h2>
-<p><strong>它主要是设置 <code>Activity</code> 是否可由其他应用的组件启动</strong>， “<code>true</code>” 则表示可以，而“<code>false</code>”表示不可以。</p>
-<p>若为“<code>false</code>”，则 <code>Activity</code> 只能由同一应用的组件或使用同一用户 ID 的不同应用启动。</p>
-<p>当然不止是 <code>Activity</code>， <code>Service</code> 和 <code>Receiver</code> 也会有 <code>exported</code> 的场景。</p>
-<p><strong>一般情况下如果使用了 <code>intent-filter</code>，则不能将 <code>exported</code> 设置为“<code>false</code>”</strong>，不然在 <code>Activity</code> 被调用时系统会抛出 <code>ActivityNotFoundException</code> 异常。</p>
+<article class="markdown-body entry-content container-lg"><p>Android系统构架是安卓系统的体系结构，android的系统架构和其操作系统一样，采用了分层的架构，共分为四层，从高到低分别是Android应用层，Android应用框架层，Android系统运行库层和Linux内核层。</p>
+<p>Android系统构架主要应用于ARM平台，但不仅限于ARM，通过编译控制，在X86、MAC等体系结构的机器上同样可以运行。</p>
+<p><img src="https://bkimg.cdn.bcebos.com/pic/2fdda3cc7cd98d10ac7dfab52b3fb80e7aec908d?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U4MA==,g_7,xp_5,yp_5/format,f_auto" alt=android系统框架></p>
+<h3 id=应用层>应用层</h3>
+<p>Android会同一系列核心应用程序包一起发布，该应用程序包包括email客户端，SMS短消息程序，日历，地图，浏览器，联系人管理程序等。它们一般都是使用Java进行编写。</p>
+<h3 id=应用框架层>应用框架层</h3>
+<p>开发人员也可以完全访问核心应用程序所使用的API框架。该应用程序的架构设计简化了组件的重用;任何一个应用程序都可以发布它的功能块并且任何其它的应用程序都可以使用其所发布的功能块(不过得遵循框架的安全性限制)。同样，该应用程序重用机制也使用户可以方便的替换程序组件。</p>
+<p>隐藏在每个应用后面的是一系列的服务和系统,其中包括：</p>
 <blockquote>
-<p>相反如果没有 <code>intent-filter</code>，那就不应该把 <code>Activity</code> 的 <code>exported</code> 设置为<code>true</code> ，<strong>这可能会在安全扫描时被定义为安全漏洞</strong>。</p>
+<p>视图(Views)，可以用来构建应用程序，它包括列表(lists)，网格(grids)，文本框(textBoxes)，按钮(buttons)，甚至可嵌入的web浏览器。</p>
 </blockquote>
-<p>而在 Android 12 的平台上，也就是使用 <code>targetSdkVersion 31</code> 时，那么你就需要注意：</p>
-<p><strong>如果 <code>Activity</code> 、 <code>Service</code> 或 <code>Receiver</code> 使用 <code>intent-filter</code> ，并且未显式声明 <code>android:exported</code> 的值，App 将会无法安装。</strong></p>
-<h2 id=二splashscreen>二、SplashScreen</h2>
-<p>Android 12 新增加了 <a href="https://link.juejin.cn/?target=https%3A%2F%2Fdeveloper.android.com%2Freference%2Fandroid%2Fwindow%2FSplashScreen"><code>SplashScreen</code></a> 的 API，它包括启动时的进入应用的动作、显示应用的图标画面，以及展示应用本身的过渡效果。</p>
-<p>它大概由如下 4 个部分组成，这里需要注意：</p>
-<ul>
-<li>1 最好是矢量的可绘制对象，当然它可以是静态或动画形式。</li>
-<li>2 是可选的，也就是图标的背景。</li>
-<li>与自适应图标一样，前景的三分之一被遮盖 (3)。</li>
-<li>4 就是窗口背景。</li>
-</ul>
-<p>启动画面动画机制由进入动画和退出动画组成。</p>
-<ul>
-<li>进入动画由系统视图到启动画面组成，这由系统控制且不可自定义。</li>
-<li>退出动画由隐藏启动画面的动画运行组成。如果要<a href="https://link.juejin.cn?target=https%3A%2F%2Fdeveloper.android.com%2Fguide%2Ftopics%2Fui%2Fsplash-screen%23customize-animation">对其进行自定义</a>，可以通过 <a href="https://link.juejin.cn?target=https%3A%2F%2Fdeveloper.android.com%2Freference%2Fandroid%2Fwindow%2FSplashScreenView"><code>SplashScreenView</code></a> 自定义</li>
-</ul></article>
+<blockquote>
+<p>内容提供器(ContentProviders)使得应用程序可以访问另一个应用程序的数据(如联系人数据库)，或者共享它们自己的数据</p>
+</blockquote>
+<blockquote>
+<p>资源管理器(ResourceManager)提供非代码资源的访问，如本地字符串，图形，和布局文件(layoutfiles)。</p>
+</blockquote>
+<blockquote>
+<p>通知管理器(NotificationManager)使得应用程序可以在状态栏中显示自定义的提示信息。</p>
+</blockquote>
+<blockquote>
+<p>活动管理器(ActivityManager)用来管理应用程序生命周期并提供常用的导航回退功能。</p>
+</blockquote>
+<h3 id=系统运行库层>系统运行库层</h3>
+<h5 id=1-程序库>(1) 程序库</h5>
+<p>Android包含一些C/C++库，这些库能被Android系统中不同的组件使用。它们通过Android应用程序框架为开发者提供服务。以下是一些核心库：</p>
+<blockquote>
+<p>系统C库——一个从BSD继承来的标准C系统函数库(libc)，它是专门为基于embeddedlinux的设备定制的。</p>
+</blockquote>
+<blockquote>
+<p>媒体库——基于PacketVideoopencore;该库支持多种常用的音频、视频格式回放和录制，同时支持静态图像文件。编码格式包括MPEG4,H.264,MP3,AAC,AMR,JPG,PNG。</p>
+</blockquote>
+<blockquote>
+<p>SurfaceManager——对显示子系统的管理，并且为多个应用程序提供了2D和3D图层的无缝融合。</p>
+</blockquote>
+<blockquote>
+<p>LibWebCore——一个最新的web浏览器引擎用，支持Android浏览器和一个可嵌入的web视图。</p>
+</blockquote>
+<blockquote>
+<p>SGL——底层的2D图形引擎</p>
+</blockquote>
+<blockquote>
+<p>3Dlibraries——基于OpenGLES1.0APIs实现;该库可以使用硬件3D加速(如果可用)或者使用高度优化的3D软加速。</p>
+</blockquote>
+<blockquote>
+<p>FreeType——位图(bitmap)和矢量(vector)字体显示。</p>
+</blockquote>
+<blockquote>
+<p>SQLite——一个对于所有应用程序可用，功能强劲的轻型关系型数据库引擎。</p>
+</blockquote>
+<h5 id=2-android运行库>(2) Android运行库</h5>
+<p>Android包括了一个核心库，该核心库提供了JAVA编程语言核心库的大多数功能。</p>
+<p>每一个Android应用程序都在它自己的进程中运行，都拥有一个独立的Dalvik虚拟机实例。Dalvik被设计成一个设备可以同时高效地运行多个虚拟系统。Dalvik虚拟机执行(.dex)的Dalvik可执行文件，该格式文件针对小内存使用做了优化。同时虚拟机是基于寄存器的，所有的类都经由JAVA编译器编译，然后通过SDK中的“dx”工具转化成.dex格式由虚拟机执行。</p>
+<p>Dalvik虚拟机依赖于linux内核的一些功能，比如线程机制和底层内存管理机制。</p>
+<h3 id=linux内核层>Linux内核层</h3>
+<p>Android的核心系统服务依赖于Linux2.6内核，如安全性，内存管理，进程管理，网络协议栈和驱动模型。Linux内核也同时作为硬件和软件栈之间的抽象层。</p></article>
 </div>
 </div>
 </div>
@@ -154,7 +183,7 @@ Tue, 04 Jan 2022 14:29:54 +0000</relative-time>
 </div>
 </main>
 </div>
-<script>window.onload=function(){const a=document.getElementById('post-header'),b=a.offsetHeight;document.documentElement.style.scrollPaddingTop=b+10+"px"};const tocToggleButton=document.getElementById("toc-toggle"),tippyInstance=tippy('#toc-toggle',{trigger:'click',content:'<div id="table-of-contents">\u003cnav id=\u0022TableOfContents\u0022\u003e\n  \u003cul\u003e\n    \u003cli\u003e\u003ca href=\u0022#一androidexported\u0022\u003e一、android:exported\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#二splashscreen\u0022\u003e二、SplashScreen\u003c/a\u003e\u003c/li\u003e\n  \u003c/ul\u003e\n\u003c/nav\u003e</div>',allowHTML:!0,placement:'bottom-start',interactive:!0,arrow:!1,maxWidth:"none",onHide:function(){tocToggleButton.classList.remove("hover")},onShow:function(){tocToggleButton.classList.add("hover")},onShown:function(){if(selectTableOfContentsOption(),window.hasSetupTableOfContentsListeners)return;const a=document.getElementById("table-of-contents");a.addEventListener('click',function(){tippyInstance[0].hide()}),window.hasSetupTableOfContentsListeners=!0}});function selectTableOfContentsOption(){const a='table-of-contents-option-selected',b=document.querySelectorAll("#table-of-contents > nav > ul li");for(const d of b){const[c]=d.children;if(c.tagName.toLowerCase()!=='a')continue;window.location.href===c.href?c.classList.add(a):c.classList.remove(a)}}window.onhashchange=selectTableOfContentsOption</script>
+<script>window.onload=function(){const a=document.getElementById('post-header'),b=a.offsetHeight;document.documentElement.style.scrollPaddingTop=b+10+"px"};const tocToggleButton=document.getElementById("toc-toggle"),tippyInstance=tippy('#toc-toggle',{trigger:'click',content:'<div id="table-of-contents">\u003cnav id=\u0022TableOfContents\u0022\u003e\n  \u003cul\u003e\n    \u003cli\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003ca href=\u0022#应用层\u0022\u003e应用层\u003c/a\u003e\u003c/li\u003e\n        \u003cli\u003e\u003ca href=\u0022#应用框架层\u0022\u003e应用框架层\u003c/a\u003e\u003c/li\u003e\n        \u003cli\u003e\u003ca href=\u0022#系统运行库层\u0022\u003e系统运行库层\u003c/a\u003e\u003c/li\u003e\n        \u003cli\u003e\u003ca href=\u0022#linux内核层\u0022\u003eLinux内核层\u003c/a\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n  \u003c/ul\u003e\n\u003c/nav\u003e</div>',allowHTML:!0,placement:'bottom-start',interactive:!0,arrow:!1,maxWidth:"none",onHide:function(){tocToggleButton.classList.remove("hover")},onShow:function(){tocToggleButton.classList.add("hover")},onShown:function(){if(selectTableOfContentsOption(),window.hasSetupTableOfContentsListeners)return;const a=document.getElementById("table-of-contents");a.addEventListener('click',function(){tippyInstance[0].hide()}),window.hasSetupTableOfContentsListeners=!0}});function selectTableOfContentsOption(){const a='table-of-contents-option-selected',b=document.querySelectorAll("#table-of-contents > nav > ul li");for(const d of b){const[c]=d.children;if(c.tagName.toLowerCase()!=='a')continue;window.location.href===c.href?c.classList.add(a):c.classList.remove(a)}}window.onhashchange=selectTableOfContentsOption</script>
 <div class="footer container-xl width-full p-responsive">
 <div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light">
 <a aria-label=Homepage title=GitHub class="footer-octicon d-none d-lg-block mr-lg-4" href=https://chenjiuling.github.io/><svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
