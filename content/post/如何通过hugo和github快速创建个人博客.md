@@ -11,12 +11,11 @@ draft: false
 到 [Hugo Releases](https://github.com/spf13/hugo/releases) 下载对应的操作系统版本的Hugo二进制文件（hugo或者hugo.exe）
 
 Mac下直接使用 `Homebrew` 安装：
+<!--more-->
 
 ```bash
 brew install hugo
 ```
-
-<!--more-->
 
 #### 2. 源码安装
 
