@@ -8,7 +8,7 @@ Android系统构架是安卓系统的体系结构，android的系统架构和其
 
 Android系统构架主要应用于ARM平台，但不仅限于ARM，通过编译控制，在X86、MAC等体系结构的机器上同样可以运行。
 <!--more-->
-![android系统框架](https://bkimg.cdn.bcebos.com/pic/2fdda3cc7cd98d10ac7dfab52b3fb80e7aec908d?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U4MA==,g_7,xp_5,yp_5/format,f_auto)
+![android系统框架](https://img-blog.csdnimg.cn/20200405172503899.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZyZWVraW5nMTAx,size_16,color_FFFFFF,t_70)
 
 ### 应用层
 
