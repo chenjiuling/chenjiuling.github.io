@@ -1,0 +1,327 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width">
+<script type=application/javascript src=https://chenjiuling.github.io/js/theme-mode.js></script>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/frameworks.min.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/github.min.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/github-style.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/light.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/dark.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/syntax.css>
+<title>ConstrainLayout用法集合 - chenjiuling - 在阅读中遇见自己</title>
+<link rel=icon type=image/x-icon href=/images/github.png>
+<meta name=theme-color content="#1e2327">
+<meta name=description content="一.布局的使用 1.1 位置约束  ConstraintLayout采用方向约束的方式对控件进行定位，至少要保证水平和垂直方向都至少有一个约束才能确定控件的位置
+ 1.1.1 基本方向约束">
+<meta name=keywords content="blog,android">
+<meta name=robots content="noodp">
+<link rel=canonical href=https://chenjiuling.github.io/post/constrainlayout%E7%94%A8%E6%B3%95%E9%9B%86%E5%90%88/>
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="ConstrainLayout用法集合 - chenjiuling - 在阅读中遇见自己">
+<meta name=twitter:description content="一.布局的使用 1.1 位置约束  ConstraintLayout采用方向约束的方式对控件进行定位，至少要保证水平和垂直方向都至少有一个约束才能确定控件的位置
+ 1.1.1 基本方向约束">
+<meta name=twitter:site content="https://chenjiuling.github.io/">
+<meta name=twitter:creator content>
+<meta name=twitter:image content="https://chenjiuling.github.io/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ConstrainLayout用法集合 - chenjiuling - 在阅读中遇见自己">
+<meta property="og:description" content="一.布局的使用 1.1 位置约束  ConstraintLayout采用方向约束的方式对控件进行定位，至少要保证水平和垂直方向都至少有一个约束才能确定控件的位置
+ 1.1.1 基本方向约束">
+<meta property="og:url" content="https://chenjiuling.github.io/post/constrainlayout%E7%94%A8%E6%B3%95%E9%9B%86%E5%90%88/">
+<meta property="og:site_name" content="ConstrainLayout用法集合">
+<meta property="og:image" content="https://chenjiuling.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:published_time" content="2022-01-06 20:53:24 +0800 +0800">
+</head>
+<body>
+<div style=position:relative>
+<header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+<div class="Header-item mobile-none" style=margin-top:-4px;margin-bottom:-4px>
+<a class=Header-link href=https://chenjiuling.github.io/><svg class="octicon" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+</div>
+<div class="Header-item d-md-none">
+<button class="Header-link btn-link js-details-target" type=button onclick="document.querySelector('#header-search').style.display=document.querySelector('#header-search').style.display=='none'?'block':'none'"><svg height="24" class="octicon octicon-three-bars" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M1 2.75A.75.75.0 011.75 2h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 2.75zm0 5A.75.75.0 011.75 7h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 7.75zM1.75 12a.75.75.0 100 1.5h12.5a.75.75.0 100-1.5H1.75z"/></svg>
+</button>
+</div>
+<div style=display:none id=header-search class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+<div class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+<div class=position-relative>
+<form target=_blank action=https://www.google.com/search accept-charset=utf-8 method=get autocomplete=off>
+<label class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+<input type=text class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable" name=q placeholder=Search autocomplete=off>
+<input type=hidden name=q value=site:https://chenjiuling.github.io/>
+</label>
+</form>
+</div>
+</div>
+</div>
+<div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+<a class=Header-link href=https://chenjiuling.github.io/><svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+</div>
+<div class=Header-item style=margin-right:0>
+<a href=javascript:void(0) class="Header-link no-select" onclick=switchTheme()><svg style="fill:var(--color-profile-color-modes-toggle-moon)" class="no-select" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.52208 7.71754c3.05612.0 5.53362-2.47748 5.53362-5.5336C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961 9.95801 1.07727 10.3495.771159 10.6474.99992c1.4679 1.12724 2.4141 2.90007 2.4141 4.89391.0 3.40575-2.7609 6.16667-6.16665 6.16667-2.94151.0-5.40199-2.0595-6.018122-4.81523C.794841 6.87902 1.23668 6.65289 1.55321 6.85451 2.41106 7.40095 3.4296 7.71754 4.52208 7.71754z"/></svg>
+</a>
+</div>
+</header>
+</div>
+<script src=https://unpkg.com/@popperjs/core@2></script>
+<script src=https://unpkg.com/tippy.js@6></script>
+<div>
+<main>
+<div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+<div class=px-0>
+<div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+<div class="flex-auto min-width-0 width-fit mr-3">
+<div class=d-flex>
+<div class="d-none d-md-block">
+<a class="avatar mr-2 flex-shrink-0" href=https://chenjiuling.github.io/>
+<img class=avatar-user src=https://chenjiuling.github.io/images/avatar.png width=32 height=32></a>
+</div>
+<div class="d-flex flex-column">
+<h1 class="break-word f3 text-normal mb-md-0 mb-1">
+<span class=author>
+<a href=https://chenjiuling.github.io/>chenjiuling</a></span><span class=path-divider>/</span><strong class="css-truncate-target mr-1" style=max-width:410px><a href=https://chenjiuling.github.io/post/constrainlayout%E7%94%A8%E6%B3%95%E9%9B%86%E5%90%88/>ConstrainLayout用法集合</a></strong>
+</h1>
+<div class="note m-0">
+Created <relative-time datetime="Thu, 06 Jan 2022 20:53:24 +0800" class=no-wrap>
+Thu, 06 Jan 2022 20:53:24 +0800</relative-time>
+<span class=file-info-divider></span>
+Modified <relative-time datetime="Thu, 06 Jan 2022 14:01:24 +0000" class=no-wrap>
+Thu, 06 Jan 2022 14:01:24 +0000</relative-time>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-lg px-3 new-discussion-timeline">
+<div class="repository-content gist-content">
+<div>
+<div class="js-gist-file-update-container js-task-list-container file-box">
+<div id=file-pytest class="file my-2">
+<div id=post-header class="file-header d-flex flex-md-items-center flex-items-start sticky-header">
+<div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+<div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+<summary id=toc-toggle class="btn btn-octicon m-0 mr-2 p-2" aria-haspopup=menu aria-label="Table of Contents" role=button><svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered"><path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zM3 8A1 1 0 111 8a1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+</summary>
+2685 Words
+</div>
+<div class="file-actions flex-order-2 pt-0">
+</div>
+</div>
+</div>
+<div class="Box-body px-5 pb-5">
+<article class="markdown-body entry-content container-lg"><h2 id=一布局的使用>一.布局的使用</h2>
+<h4 id=11-位置约束>1.1 位置约束</h4>
+<blockquote>
+<p>ConstraintLayout采用方向约束的方式对控件进行定位，至少要保证水平和垂直方向都至少有一个约束才能确定控件的位置</p>
+</blockquote>
+<h5 id=111-基本方向约束>1.1.1 基本方向约束</h5>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#75715e>&lt;!-- 基本方向约束 --&gt;</span>
+<span style=color:#75715e>&lt;!-- 我的什么位置在谁的什么位置 --&gt;</span>
+app:layout_constraintTop_toTopOf=&#34;&#34;           我的顶部和谁的顶部对齐
+app:layout_constraintBottom_toBottomOf=&#34;&#34;     我的底部和谁的底部对齐
+app:layout_constraintLeft_toLeftOf=&#34;&#34;         我的左边和谁的左边对齐
+app:layout_constraintRight_toRightOf=&#34;&#34;       我的右边和谁的右边对齐
+app:layout_constraintStart_toStartOf=&#34;&#34;       我的开始位置和谁的开始位置对齐
+app:layout_constraintEnd_toEndOf=&#34;&#34;           我的结束位置和谁的结束位置对齐
+app:layout_constraintTop_toBottomOf=&#34;&#34;        我的顶部位置在谁的底部位置
+app:layout_constraintStart_toEndOf=&#34;&#34;         我的开始位置在谁的结束为止
+<span style=color:#75715e>&lt;!-- ...以此类推 --&gt;</span>
+
+</code></pre></div><h5 id=112-基线对齐>1.1.2 基线对齐</h5>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>app:layout_constraintBaseline_toBaselineOf=&#34;&#34;
+</code></pre></div><h5 id=113-角度约束>1.1.3 角度约束</h5>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>app:layout_constraintCircle=&#34;&#34;         目标控件id
+app:layout_constraintCircleAngle=&#34;&#34;    对于目标的角度(0-360)
+app:layout_constraintCircleRadius=&#34;&#34;   到目标中心的距离
+</code></pre></div><h5 id=114-百分比偏移>1.1.4 百分比偏移</h5>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>app:layout_constraintHorizontal_bias=&#34;&#34;   水平偏移 取值范围是0-1的小数
+app:layout_constraintVertical_bias=&#34;&#34;     垂直偏移 取值范围是0-1的小数
+</code></pre></div><h4 id=12-控件内边距外边距gone-margin>1.2 控件内边距、外边距、GONE Margin</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#75715e>&lt;!--  外边距  --&gt;</span>
+android:layout_margin=&#34;0dp&#34;
+android:layout_marginStart=&#34;0dp&#34;
+android:layout_marginLeft=&#34;0dp&#34;
+android:layout_marginTop=&#34;0dp&#34;
+android:layout_marginEnd=&#34;0dp&#34;
+android:layout_marginRight=&#34;0dp&#34;
+android:layout_marginBottom=&#34;0dp&#34;
+
+<span style=color:#75715e>&lt;!--  内边距  --&gt;</span>
+android:padding=&#34;0dp&#34;
+android:paddingStart=&#34;0dp&#34;
+android:paddingLeft=&#34;0dp&#34;
+android:paddingTop=&#34;0dp&#34;
+android:paddingEnd=&#34;0dp&#34;
+android:paddingRight=&#34;0dp&#34;
+android:paddingBottom=&#34;0dp&#34; 
+
+<span style=color:#75715e>&lt;!--  GONE Margin  --&gt;</span>
+app:layout_goneMarginBottom=&#34;0dp&#34;
+app:layout_goneMarginEnd=&#34;0dp&#34;
+app:layout_goneMarginLeft=&#34;0dp&#34;
+app:layout_goneMarginRight=&#34;0dp&#34;
+app:layout_goneMarginStart=&#34;0dp&#34;
+app:layout_goneMarginTop=&#34;0dp&#34;
+</code></pre></div><blockquote>
+<p>当目标控件是显示的时候GONE Margin不会生效</p>
+</blockquote>
+<h4 id=13-控件尺寸>1.3 控件尺寸</h4>
+<h5 id=131-尺寸限制>1.3.1 尺寸限制</h5>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>android:minWidth=&#34;&#34;   设置view的最小宽度
+android:minHeight=&#34;&#34;  设置view的最小高度
+android:maxWidth=&#34;&#34;   设置view的最大宽度
+android:maxHeight=&#34;&#34;  设置view的最大高度
+</code></pre></div><h5 id=132-0dpmatch_constraint>1.3.2 0dp(MATCH_CONSTRAINT)</h5>
+<blockquote>
+<p>设置view的大小除了传统的wrap_content、指定尺寸、match_parent外，ConstraintLayout还可以设置为0dp（MATCH_CONSTRAINT），并且0dp的作用会根据设置的类型而产生不同的作用，进行设置类型的属性是layout_constraintWidth_default和layout_constraintHeight_default，取值可为spread、percent、wrap。</p>
+</blockquote>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>app:layout_constraintWidth_default=&#34;spread|percent|wrap&#34;
+app:layout_constraintHeight_default=&#34;spread|percent|wrap&#34;
+</code></pre></div><ul>
+<li>spread（默认）：占用所有的符合约束的空间</li>
+</ul>
+<p><img src=https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f6fa75244dd3483eb32aac904431750b~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<ul>
+<li>percent：按照父布局的百分比设置</li>
+</ul>
+<p><img src=https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e88df6f6915b43d0a884bdedbec0136c~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<blockquote>
+<p>percent模式的意思是自身view的尺寸是父布局尺寸的一定比例，上图所展示的是宽度是父布局宽度的0.5（50%，取值是0-1的小数），该模式需要配合layout_constraintWidth_percent使用，但是写了layout_constraintWidth_percent后，layout_constraintWidth_default=&ldquo;percent"其实就可以省略掉了。</p>
+</blockquote>
+<ul>
+<li>wrap：匹配内容大小但不超过约束限制</li>
+</ul>
+<p><img src=https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fab93718e5bb4050b83b8b17f1d04707~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<h5 id=133-比例宽高ratio>1.3.3 比例宽高（Ratio）</h5>
+<blockquote>
+<p>ConstraintLayout中可以对宽高设置比例，前提是至少有一个约束维度设置为0dp，这样比例才会生效，该属性可使用两种设置：
+1.浮点值，表示宽度和高度之间的比率
+2.宽度:高度，表示宽度和高度之间形式的比率</p>
+</blockquote>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>app:layout_constraintDimensionRatio=&#34;&#34;  宽高比例
+</code></pre></div><h4 id=14-chains链>1.4 Chains(链)</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>app:layout_constraintHorizontal_chainStyle=&#34;spread|packed|spread_inside&#34;
+app:layout_constraintVertical_chainStyle=&#34;spread|packed|spread_inside&#34;
+</code></pre></div><ul>
+<li>spread（默认）：均分剩余空间</li>
+</ul>
+<p><img src=https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/03484b53154d4c1ba42709484b5df335~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<ul>
+<li>spread_inside：两侧的控件贴近两边，剩余的控件均分剩余空间</li>
+</ul>
+<p><img src=https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f96459487bb34167949130979db787fe~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<ul>
+<li>packed：所有控件贴紧居中</li>
+</ul>
+<p><img src=https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/28ee43c44a8e46a886c1ee0825395b76~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<blockquote>
+<p>Chains(链)还支持weight（权重）的配置，使用layout_constraintHorizontal_weight和layout_constraintVertical_weight进行设置链元素的权重</p>
+</blockquote>
+<p><img src=https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ce061ce729524a848a9a11ca82a7d711~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<h2 id=二-辅助类>二. 辅助类</h2>
+<h4 id=21-guideline参考线>2.1 Guideline（参考线）</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>android:orientation=&#34;horizontal|vertical&#34;  辅助线的对齐方式
+app:layout_constraintGuide_percent=&#34;0-1&#34;   距离父级宽度或高度的百分比(小数形式)
+app:layout_constraintGuide_begin=&#34;&#34;        距离父级起始位置的距离(左侧或顶部)
+app:layout_constraintGuide_end=&#34;&#34;          距离父级结束位置的距离(右侧或底部)
+</code></pre></div><h4 id=22-barrier屏障>2.2 Barrier（屏障）</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#75715e>&lt;!--用于控制Barrier相对于给定的View的位置--&gt;</span>
+app:barrierDirection=&#34;top|bottom|left|right|start|end&#34;  
+<span style=color:#75715e>&lt;!--取值是要依赖的控件的id，Barrier将会使用ids中最大的一个的宽/高作为自己的位置--&gt;</span>
+app:constraint_referenced_ids=&#34;id,id&#34;
+</code></pre></div><h4 id=23-group组>2.3 Group（组）</h4>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml>app:constraint_referenced_ids=&#34;id,id&#34;  加入组的控件id
+</code></pre></div><h4 id=24-placeholder占位符>2.4 Placeholder（占位符）</h4>
+<blockquote>
+<p>Placeholder的作用就是占位，它可以在布局中占好位置，通过app:content=&ldquo;&ldquo;属性，或者动态调用setContent()设置内容，来让某个控件移动到此占位符中</p>
+</blockquote>
+<h4 id=25-flow流式虚拟布局>2.5 Flow（流式虚拟布局）</h4>
+<blockquote>
+<p>Flow是用于构建链的新虚拟布局，当链用完时可以缠绕到下一行甚至屏幕的另一部分。当您在一个链中布置多个项目时，这很有用，但是您不确定容器在运行时的大小。您可以使用它来根据应用程序中的动态尺寸（例如旋转时的屏幕宽度）构建布局。Flow是一种虚拟布局。在ConstraintLayout中，虚拟布局(Virtual layouts)作为virtual view group的角色参与约束和布局中，但是它们并不会作为视图添加到视图层级结构中，而是仅仅引用其它视图来辅助它们在布局系统中完成各自的布局功能。</p>
+</blockquote>
+<p><img src=https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/53f5a0846fe04fdeae22b9fdb40b2299~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<h5 id=251-链约束>2.5.1 链约束</h5>
+<blockquote>
+<p>Flow的constraint_referenced_ids关联的控件是没有设置约束的，这一点和普通的链是不一样的，这种排列方式是Flow的默认方式none，我们可以使用app:flow_wrapMode=&ldquo;&ldquo;属性来设置排列方式，并且我们还可以使用flow_horizontalGap和flow_verticalGap分别设置两个view在水平和垂直方向的间隔，下面我们再添加几个控件来展示三种排列方式：</p>
+</blockquote>
+<ul>
+<li>none（默认值）：所有引用的view形成一条链，水平居中，超出屏幕两侧的view不可见</li>
+</ul>
+<p><img src=https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb26ecdcad8c4155a1c8971802a2197b~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<ul>
+<li>chian：所引用的view形成一条链，超出部分会自动换行，同行的view会平分宽度</li>
+</ul>
+<p><img src=https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8664ec3c1b7e46b5ba8c79371f77cee8~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<ul>
+<li>aligned：所引用的view形成一条链，但view会在同行同列</li>
+</ul>
+<p><img src=https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff52a9fd5a7c4f478da5302d872961cb~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<blockquote>
+<p>动画演示</p>
+</blockquote>
+<p><img src=https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c8cfe785be524391a8e12d438c135c6e~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<h5 id=252-对齐约束>2.5.2 对齐约束</h5>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#75715e>&lt;!--  top:顶对齐、bottom:底对齐、center:中心对齐、baseline:基线对齐  --&gt;</span>
+app:flow_verticalAlign=&#34;top｜bottom｜center｜baseline&#34;
+<span style=color:#75715e>&lt;!--  start:开始对齐、end:结尾对齐、center:中心对齐  --&gt;</span>
+app:flow_horizontalAlign=&#34;start|end|center&#34;
+</code></pre></div><blockquote>
+<p>使用flow_verticalAlign时，要求orientation的方向是horizontal，而使用flow_horizontalAlign时，要求orientation的方向是vertical</p>
+</blockquote>
+<p>horizontal 水平排列</p>
+<ul>
+<li>top</li>
+</ul>
+<p><img src=https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7f28f70b5608483fb3642e7f381003d0~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<ul>
+<li>bottom</li>
+</ul>
+<p><img src=https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d816fd4fab8c4b9f9765c343e2e36643~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<ul>
+<li>center</li>
+</ul>
+<p><img src=https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a18664704e9a45f19b86bd8bab7f051e~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<ul>
+<li>baseline</li>
+</ul>
+<p><img src=https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8df33a9c674144abaab9462a843f92ad~tplv-k3u1fbpfcp-watermark.awebp alt></p>
+<h5 id=253-数量约束>2.5.3 数量约束</h5>
+<blockquote>
+<p>当flow_wrapMode属性为aligned和chian时，通过flow_maxElementsWrap属性控制每行最大的子View数量</p>
+</blockquote>
+<h4 id=26-layer层布局>2.6 Layer（层布局）</h4>
+<blockquote>
+<p>Layer继承自ConstraintHelper，是一个约束助手，相对于Flow来说，Layer的使用较为简单，常用来增加背景，或者共同动画，图层 (Layer) 在布局期间会调整大小，其大小会根据其引用的所有视图进行调整，代码的先后顺序也会决定着它的位置，如果代码在所有引用view的最后面，那么它就会在所有view的最上面，反之则是最下面，在最上面的时候如果添加背景，就会把引用的view覆盖掉。</p>
+</blockquote>
+<h4 id=27-imagefilterbutton--imagefilterview>2.7 ImageFilterButton & ImageFilterView</h4></article>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>window.onload=function(){const a=document.getElementById('post-header'),b=a.offsetHeight;document.documentElement.style.scrollPaddingTop=b+10+"px"};const tocToggleButton=document.getElementById("toc-toggle"),tippyInstance=tippy('#toc-toggle',{trigger:'click',content:'<div id="table-of-contents">\u003cnav id=\u0022TableOfContents\u0022\u003e\n  \u003cul\u003e\n    \u003cli\u003e\u003ca href=\u0022#一布局的使用\u0022\u003e一.布局的使用\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#二-辅助类\u0022\u003e二. 辅助类\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n  \u003c/ul\u003e\n\u003c/nav\u003e</div>',allowHTML:!0,placement:'bottom-start',interactive:!0,arrow:!1,maxWidth:"none",onHide:function(){tocToggleButton.classList.remove("hover")},onShow:function(){tocToggleButton.classList.add("hover")},onShown:function(){if(selectTableOfContentsOption(),window.hasSetupTableOfContentsListeners)return;const a=document.getElementById("table-of-contents");a.addEventListener('click',function(){tippyInstance[0].hide()}),window.hasSetupTableOfContentsListeners=!0}});function selectTableOfContentsOption(){const a='table-of-contents-option-selected',b=document.querySelectorAll("#table-of-contents > nav > ul li");for(const d of b){const[c]=d.children;if(c.tagName.toLowerCase()!=='a')continue;window.location.href===c.href?c.classList.add(a):c.classList.remove(a)}}window.onhashchange=selectTableOfContentsOption</script>
+<div class="footer container-xl width-full p-responsive">
+<div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light">
+<a aria-label=Homepage title=GitHub class="footer-octicon d-none d-lg-block mr-lg-4" href=https://chenjiuling.github.io/><svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+<ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+<li class="mr-3 mr-lg-0">Theme by <a href=https://github.com/MeiK2333/github-style>github-style</a></li>
+</ul>
+</div>
+<div class="d-flex flex-justify-center pb-6">
+<span class="f6 text-gray-light"></span>
+</div>
+</div>
+</body>
+<script type=application/javascript src=https://chenjiuling.github.io/js/github-style.js></script>
+</html>
