@@ -11,6 +11,8 @@ pin: true
 
 「由一个或多个连续的文本行组成」这句话其实暗示了 Markdown 允许段落内的强迫换行（插入换行符），这个特性和其他大部分的 text-to-HTML 格式不一样（包括 Movable Type 的「Convert Line Breaks」选项），其它的格式会把每个换行符都转成 ``标签。
 
+<!--more-->
+
 如果你*确实*想要依赖 Markdown 来插入 ``标签的话，在插入处先按入两个以上的空格然后回车。
 
 的确，需要多费点事（多加空格）来产生 `，但是简单地「每个换行都转换为`」的方法在 Markdown 中并不适合， Markdown 中 email 式的 [区块引用](https://www.appinn.com/markdown/#blockquote) 和多段落的 [列表](https://www.appinn.com/markdown/#list) 在使用换行来排版的时候，不但更好用，还更方便阅读。
