@@ -2,7 +2,6 @@
 title: "Android系统架构杂谈"
 date: 2022-01-04T22:11:54+08:00
 draft: false
-pin: true
 ---
 Android系统构架是安卓系统的体系结构，android的系统架构和其操作系统一样，采用了分层的架构，共分为四层，从高到低分别是Android应用层，Android应用框架层，Android系统运行库层和Linux内核层。
 
