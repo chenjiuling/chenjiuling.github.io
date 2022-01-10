@@ -9,7 +9,7 @@
 <link rel=stylesheet href=https://chenjiuling.github.io/css/light.css>
 <link rel=stylesheet href=https://chenjiuling.github.io/css/dark.css>
 <link rel=stylesheet href=https://chenjiuling.github.io/css/syntax.css>
-<title>安卓开发应用架构之数据层 - chenjiuling - 在阅读中遇见自己</title>
+<title>安卓开发应用架构之数据层 - 在阅读中遇见自己</title>
 <link rel=icon type=image/x-icon href=/images/github.png>
 <meta name=theme-color content="#1e2327">
 <meta name=description content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。 这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
@@ -18,14 +18,14 @@
 <meta name=robots content="noodp">
 <link rel=canonical href=https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B1%82/>
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="安卓开发应用架构之数据层 - chenjiuling - 在阅读中遇见自己">
+<meta name=twitter:title content="安卓开发应用架构之数据层 - 在阅读中遇见自己">
 <meta name=twitter:description content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。 这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
 ">
 <meta name=twitter:site content="https://chenjiuling.github.io/">
 <meta name=twitter:creator content>
 <meta name=twitter:image content="https://chenjiuling.github.io/">
 <meta property="og:type" content="article">
-<meta property="og:title" content="安卓开发应用架构之数据层 - chenjiuling - 在阅读中遇见自己">
+<meta property="og:title" content="安卓开发应用架构之数据层 - 在阅读中遇见自己">
 <meta property="og:description" content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。 这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
 ">
 <meta property="og:url" content="https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B1%82/">
@@ -84,14 +84,14 @@
 <div class="d-flex flex-column">
 <h1 class="break-word f3 text-normal mb-md-0 mb-1">
 <span class=author>
-<a href=https://chenjiuling.github.io/>chenjiuling</a></span><span class=path-divider>/</span><strong class="css-truncate-target mr-1" style=max-width:410px><a href=https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B1%82/>安卓开发应用架构之数据层</a></strong>
+<a href=https://chenjiuling.github.io/>chenjie</a></span><span class=path-divider>/</span><strong class="css-truncate-target mr-1" style=max-width:410px><a href=https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B1%82/>安卓开发应用架构之数据层</a></strong>
 </h1>
 <div class="note m-0">
 Created <relative-time datetime="Mon, 10 Jan 2022 14:11:54 +0800" class=no-wrap>
 Mon, 10 Jan 2022 14:11:54 +0800</relative-time>
 <span class=file-info-divider></span>
-Modified <relative-time datetime="Mon, 10 Jan 2022 12:35:34 +0000" class=no-wrap>
-Mon, 10 Jan 2022 12:35:34 +0000</relative-time>
+Modified <relative-time datetime="Mon, 10 Jan 2022 12:38:19 +0000" class=no-wrap>
+Mon, 10 Jan 2022 12:38:19 +0000</relative-time>
 </div>
 </div>
 </div>
