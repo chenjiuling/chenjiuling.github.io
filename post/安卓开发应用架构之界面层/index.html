@@ -1,0 +1,392 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width">
+<script type=application/javascript src=https://chenjiuling.github.io/js/theme-mode.js></script>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/frameworks.min.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/github.min.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/github-style.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/light.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/dark.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/syntax.css>
+<title>安卓开发应用架构之界面层 - chenjiuling - 在阅读中遇见自己</title>
+<link rel=icon type=image/x-icon href=/images/github.png>
+<meta name=theme-color content="#1e2327">
+<meta name=description content="界面的作用是在屏幕上显示应用数据，并充当主要的用户互动点。每当数据发生变化时，无论是因为用户互动（例如按了某个按钮），还是因为外部输入（例如网络响应），界面都应随之更新，以反映这些变化。实际上，界面是从数据层获取的应用状态的直观呈现。
+不过，从数据层获取的应用数据的格式通常不同于您需要显示的信息的格式。例如，您可能只需要在界面中显示部分数据，或者可能需要合并两个不同的数据源，以便提供切合用户需求的信息。无论您应用的是什么逻辑，都需要向界面传递完全呈现界面所需的所有信息。界面层是一个流水线，负责将应用数据变化转换为界面可以呈现的形式，然后将其显示出来。
+">
+<meta name=keywords content="blog,android">
+<meta name=robots content="noodp">
+<link rel=canonical href=https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E7%95%8C%E9%9D%A2%E5%B1%82/>
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="安卓开发应用架构之界面层 - chenjiuling - 在阅读中遇见自己">
+<meta name=twitter:description content="界面的作用是在屏幕上显示应用数据，并充当主要的用户互动点。每当数据发生变化时，无论是因为用户互动（例如按了某个按钮），还是因为外部输入（例如网络响应），界面都应随之更新，以反映这些变化。实际上，界面是从数据层获取的应用状态的直观呈现。
+不过，从数据层获取的应用数据的格式通常不同于您需要显示的信息的格式。例如，您可能只需要在界面中显示部分数据，或者可能需要合并两个不同的数据源，以便提供切合用户需求的信息。无论您应用的是什么逻辑，都需要向界面传递完全呈现界面所需的所有信息。界面层是一个流水线，负责将应用数据变化转换为界面可以呈现的形式，然后将其显示出来。
+">
+<meta name=twitter:site content="https://chenjiuling.github.io/">
+<meta name=twitter:creator content>
+<meta name=twitter:image content="https://chenjiuling.github.io/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓开发应用架构之界面层 - chenjiuling - 在阅读中遇见自己">
+<meta property="og:description" content="界面的作用是在屏幕上显示应用数据，并充当主要的用户互动点。每当数据发生变化时，无论是因为用户互动（例如按了某个按钮），还是因为外部输入（例如网络响应），界面都应随之更新，以反映这些变化。实际上，界面是从数据层获取的应用状态的直观呈现。
+不过，从数据层获取的应用数据的格式通常不同于您需要显示的信息的格式。例如，您可能只需要在界面中显示部分数据，或者可能需要合并两个不同的数据源，以便提供切合用户需求的信息。无论您应用的是什么逻辑，都需要向界面传递完全呈现界面所需的所有信息。界面层是一个流水线，负责将应用数据变化转换为界面可以呈现的形式，然后将其显示出来。
+">
+<meta property="og:url" content="https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E7%95%8C%E9%9D%A2%E5%B1%82/">
+<meta property="og:site_name" content="安卓开发应用架构之界面层">
+<meta property="og:image" content="https://chenjiuling.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:published_time" content="2022-01-01 14:11:54 +0800 +0800">
+</head>
+<body>
+<div style=position:relative>
+<header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+<div class="Header-item mobile-none" style=margin-top:-4px;margin-bottom:-4px>
+<a class=Header-link href=https://chenjiuling.github.io/><svg class="octicon" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+</div>
+<div class="Header-item d-md-none">
+<button class="Header-link btn-link js-details-target" type=button onclick="document.querySelector('#header-search').style.display=document.querySelector('#header-search').style.display=='none'?'block':'none'"><svg height="24" class="octicon octicon-three-bars" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M1 2.75A.75.75.0 011.75 2h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 2.75zm0 5A.75.75.0 011.75 7h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 7.75zM1.75 12a.75.75.0 100 1.5h12.5a.75.75.0 100-1.5H1.75z"/></svg>
+</button>
+</div>
+<div style=display:none id=header-search class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+<div class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+<div class=position-relative>
+<form target=_blank action=https://www.google.com/search accept-charset=utf-8 method=get autocomplete=off>
+<label class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+<input type=text class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable" name=q placeholder=Search autocomplete=off>
+<input type=hidden name=q value=site:https://chenjiuling.github.io/>
+</label>
+</form>
+</div>
+</div>
+</div>
+<div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+<a class=Header-link href=https://chenjiuling.github.io/><svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+</div>
+<div class=Header-item style=margin-right:0>
+<a href=javascript:void(0) class="Header-link no-select" onclick=switchTheme()><svg style="fill:var(--color-profile-color-modes-toggle-moon)" class="no-select" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.52208 7.71754c3.05612.0 5.53362-2.47748 5.53362-5.5336C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961 9.95801 1.07727 10.3495.771159 10.6474.99992c1.4679 1.12724 2.4141 2.90007 2.4141 4.89391.0 3.40575-2.7609 6.16667-6.16665 6.16667-2.94151.0-5.40199-2.0595-6.018122-4.81523C.794841 6.87902 1.23668 6.65289 1.55321 6.85451 2.41106 7.40095 3.4296 7.71754 4.52208 7.71754z"/></svg>
+</a>
+</div>
+</header>
+</div>
+<script src=https://unpkg.com/@popperjs/core@2></script>
+<script src=https://unpkg.com/tippy.js@6></script>
+<div>
+<main>
+<div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+<div class=px-0>
+<div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+<div class="flex-auto min-width-0 width-fit mr-3">
+<div class=d-flex>
+<div class="d-none d-md-block">
+<a class="avatar mr-2 flex-shrink-0" href=https://chenjiuling.github.io/>
+<img class=avatar-user src=https://chenjiuling.github.io/images/avatar.png width=32 height=32></a>
+</div>
+<div class="d-flex flex-column">
+<h1 class="break-word f3 text-normal mb-md-0 mb-1">
+<span class=author>
+<a href=https://chenjiuling.github.io/>chenjiuling</a></span><span class=path-divider>/</span><strong class="css-truncate-target mr-1" style=max-width:410px><a href=https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E7%95%8C%E9%9D%A2%E5%B1%82/>安卓开发应用架构之界面层</a></strong>
+</h1>
+<div class="note m-0">
+Created <relative-time datetime="Sat, 01 Jan 2022 14:11:54 +0800" class=no-wrap>
+Sat, 01 Jan 2022 14:11:54 +0800</relative-time>
+<span class=file-info-divider></span>
+Modified <relative-time datetime="Mon, 10 Jan 2022 09:40:43 +0000" class=no-wrap>
+Mon, 10 Jan 2022 09:40:43 +0000</relative-time>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-lg px-3 new-discussion-timeline">
+<div class="repository-content gist-content">
+<div>
+<div class="js-gist-file-update-container js-task-list-container file-box">
+<div id=file-pytest class="file my-2">
+<div id=post-header class="file-header d-flex flex-md-items-center flex-items-start sticky-header">
+<div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+<div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+<summary id=toc-toggle class="btn btn-octicon m-0 mr-2 p-2" aria-haspopup=menu aria-label="Table of Contents" role=button><svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered"><path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zM3 8A1 1 0 111 8a1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+</summary>
+6113 Words
+</div>
+<div class="file-actions flex-order-2 pt-0">
+</div>
+</div>
+</div>
+<div class="Box-body px-5 pb-5">
+<article class="markdown-body entry-content container-lg"><p>界面的作用是在屏幕上显示应用数据，并充当主要的用户互动点。每当数据发生变化时，无论是因为用户互动（例如按了某个按钮），还是因为外部输入（例如网络响应），界面都应随之更新，以反映这些变化。实际上，界面是从数据层获取的应用状态的直观呈现。</p>
+<p>不过，从数据层获取的应用数据的格式通常不同于您需要显示的信息的格式。例如，您可能只需要在界面中显示部分数据，或者可能需要合并两个不同的数据源，以便提供切合用户需求的信息。无论您应用的是什么逻辑，都需要向界面传递完全呈现界面所需的所有信息。界面层是一个流水线，负责将应用数据变化转换为界面可以呈现的形式，然后将其显示出来。</p>
+<p><img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-ui-overview.png alt=界面层在应用架构中的作用>
+图 1. 界面层在应用架构中的作用。</p>
+<blockquote>
+<p>注意：本页中提供的建议和最佳实践可应用于广泛的应用。遵循这些建议和最佳实践有助于应用进行扩缩、提升应用的质量和稳健性，并可使应用更易于测试。不过，您应该将这些提示视为指南，并视需要进行调整来满足您的要求。</p>
+</blockquote>
+<h2 id=基本案例研究>基本案例研究</h2>
+<p>让我们以一个可获取新闻报道供用户阅读的应用为例。该应用有一个报道屏幕，用于显示可供阅读的报道；另外，该应用允许已登录的用户为真正出众的报道添加书签。考虑到随时都可能有大量的报道，读者应能够按类别浏览报道。总的来说，该应用可让用户执行以下操作：</p>
+<ul>
+<li>查看可供阅读的报道。</li>
+<li>按类别浏览报道。</li>
+<li>登录帐号并为特定报道添加书签。</li>
+<li>使用部分收费功能（如果符合相应条件）。</li>
+</ul>
+<p><img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-ui-basic-case-study.png alt=界面案例研究使用的示例“新闻”应用>
+图 2. 界面案例研究使用的示例“新闻”应用。</p>
+<p>以下几个部分使用此示例作为案例研究，以便介绍单向数据流的原则，并展示在界面层的应用架构上下文中，这些原则有助于解决的问题。</p>
+<h2 id=界面层架构>界面层架构</h2>
+<p>“界面”这一术语是指用于显示数据的 <code>activity</code> 和 <code>fragment</code> 等界面元素，无论它们使用哪个 API（<code>Views</code> 还是 <code>Jetpack Compose</code>）来显示数据。由于数据层的作用是存储和管理应用数据，以及提供对应用数据的访问权限，因此界面层必须执行以下步骤：</p>
+<pre><code>1.使用应用数据，并将其转换为界面可以轻松呈现的数据。
+2.使用界面可呈现的数据，并将其转换为用于向用户呈现的界面元素。
+3.使用来自这些组合在一起的界面元素的用户输入事件，并根据需要反映它们对界面数据的影响。
+4.根据需要重复第 1-3 步。
+</code></pre>
+<p>本指南的其余部分展示了如何实现用于执行这些步骤的界面层。具体来说，本指南涵盖以下任务和概念：</p>
+<ul>
+<li>如何定义界面状态。</li>
+<li>单向数据流 (UDF)，作为提供和管理界面状态的方式。</li>
+<li>如何根据 UDF 原则使用可观察数据类型公开界面状态。</li>
+<li>如何实现使用可观察界面状态的界面。</li>
+</ul>
+<p>其中最基本的便是定义界面状态。</p>
+<h2 id=定义界面状态>定义界面状态</h2>
+<p>简言之，界面会显示一个报道列表，以及每篇报道的部分元数据。该应用向用户显示的这些信息便是界面状态。</p>
+<p>换言之，如果界面是相对用户而言的，那么界面状态就是相对应用而言的。这就像同一枚硬币的两面，界面是界面状态的直观呈现。对界面状态所做的任何更改都会立即反映在界面中。</p>
+<p><img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-ui-elements-state.png alt=界面是将屏幕上的界面元素与界面状态绑定在一起的结果>
+图 3. 界面是将屏幕上的界面元素与界面状态绑定在一起的结果。</p>
+<p>以案例研究为例，为了满足“新闻”应用的要求，可以将完全呈现界面所需的信息封装在如下定义的 <code>NewsUiState</code> 数据类中：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsUiState</span>(
+    <span style=color:#66d9ef>val</span> isSignedIn: Boolean = <span style=color:#66d9ef>false</span>,
+    <span style=color:#66d9ef>val</span> isPremium: Boolean = <span style=color:#66d9ef>false</span>,
+    <span style=color:#66d9ef>val</span> newsItems: List&lt;NewsItemUiState&gt; = listOf(),
+    <span style=color:#66d9ef>val</span> userMessages: List&lt;Message&gt; = listOf()
+)
+
+<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsItemUiState</span>(
+    <span style=color:#66d9ef>val</span> title: String,
+    <span style=color:#66d9ef>val</span> body: String,
+    <span style=color:#66d9ef>val</span> bookmarked: Boolean = <span style=color:#66d9ef>false</span>,
+    <span style=color:#f92672>..</span>.
+)
+</code></pre></div><h4 id=不可变性>不可变性</h4>
+<p>以上示例中的界面状态定义是不可变的。这样的主要好处是，不可变对象可保证即时提供应用的状态。这样一来，界面便可专注于发挥单一作用：读取状态并相应地更新其界面元素。因此，切勿直接在界面中修改界面状态，除非界面本身是其数据的唯一来源。违反这个原则会导致同一条信息有多个可信来源，从而导致数据不一致和轻微的 bug。</p>
+<p>例如，如果案例研究中来自界面状态的 <code>NewsItemUiState</code> 对象中的 <code>bookmarked</code> 标记在 <code>Activity</code> 类中已更新，那么该标记会与数据层展开竞争，以争取成为报道的“已添加书签”状态的来源。不可变数据类对于防止此类反模式非常有用。</p>
+<blockquote>
+<p>要点：只有数据源或数据所有者才应负责更新其公开的数据。</p>
+</blockquote>
+<h4 id=本指南中的命名惯例>本指南中的命名惯例</h4>
+<p>在本指南中，界面状态类是根据其描述的屏幕或部分屏幕的功能命名的。具体命名惯例如下：</p>
+<p>功能 + UiState。</p>
+<p>例如，用于显示新闻的屏幕的状态可以称为 <code>NewsUiState</code>，新闻报道列表中的新闻报道的状态可以为 <code>NewsItemUiState</code>。</p>
+<h2 id=使用单向数据流管理状态>使用单向数据流管理状态</h2>
+<p>上一部分中指出，界面状态是呈现界面所需的详细信息的不可变快照。不过，应用中数据的动态特性意味着状态可能会随时间而变化。这可能是因为用户互动，也可能是因为其他事件修改了用于填充应用的底层数据。</p>
+<p>这些互动可以受益于处理它们的 mediator，从而定义要为每个事件应用的逻辑，并对后备数据源执行必要的转换，以便创建界面状态。这些互动及其逻辑可以位于界面本身中，但随着界面开始担任其名称所表明的角色以外的角色（数据所有者、提供方、转换器等），这可能很快就会变得难以掌控。此外，这可能会影响可测试性，因为生成的代码是紧密耦合的代码，没有可辨别的边界。归根结底，界面能够受益于减轻的负担。除非界面状态非常简单，否则界面的唯一职责应该是使用和显示界面状态。</p>
+<p>本部分介绍了单向数据流 (UDF)，这是一种架构模式，有助于强制实施这种健康的职责分离。</p>
+<h4 id=状态容器>状态容器</h4>
+<p>符合以下条件的类称为状态容器：负责提供界面状态，并且包含执行相应任务所必需的逻辑。状态容器有多种大小，具体取决于所管理的界面元素的作用域（从底部应用栏等单个微件，到整个屏幕或导航目的地，不一而足）。</p>
+<p>在后一种情况下，典型的实现是 <code>ViewModel</code> 的实例，不过根据应用的要求，使用简单的类可能就足够了。例如，案例研究中的“新闻”应用使用 <code>NewsViewModel</code> 类作为状态容器，以便为该部分显示的屏幕画面提供界面状态。</p>
+<blockquote>
+<p>要点：ViewModel 类型是推荐的实现，用于管理屏幕级界面状态，具有数据层访问权限。此外，它会在配置发生变化后自动继续存在。ViewModel 类用于定义要为应用中的事件应用的逻辑，并提供更新后的状态作为结果。</p>
+</blockquote>
+<p>您可以通过多种方式为界面与其状态提供方之间的互相依赖关系建模。不过，由于界面与其 <code>ViewModel</code> 类之间的互动在很大程度上可以理解为事件输入及其随后的状态输出，因此这种关系可以按下图所示来表示：
+<img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-ui-udf.png alt="UDF 在应用架构中的运作方式图示">
+图 4. UDF 在应用架构中的运作方式图示。</p>
+<p>状态向下流动、事件向上流动的这种模式称为单向数据流 (UDF)。这种模式对应用架构的影响如下：</p>
+<ul>
+<li><code>ViewModel</code> 会存储并公开界面要使用的状态。界面状态是经过 <code>ViewModel</code> 转换的应用数据。</li>
+<li>界面会向 <code>ViewModel</code> 发送用户事件通知。</li>
+<li><code>ViewModel</code> 会处理用户操作并更新状态。</li>
+<li>更新后的状态将反馈给界面以进行呈现。</li>
+<li>系统会对导致状态更改的所有事件重复上述操作。</li>
+</ul>
+<p>对于导航目的地或屏幕，<code>ViewModel</code> 会使用存储库或用例类来获取数据并将其转换为界面状态，同时纳入可能会导致状态更改的事件的影响。前面提到的案例研究包含一个报道列表，其中每篇报道都有标题、说明、来源、作者名称、发布日期，以及是否添加了书签。每篇报道的界面如下所示：
+<img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-ui-basic-case-study-item.png alt=案例研究应用中的报道界面>
+图 5. 案例研究应用中的报道界面。</p>
+<p>用户请求为报道添加书签就是一个可能会导致状态更改的事件示例。作为状态提供方，<code>ViewModel</code> 的职责是定义所有必需的逻辑，以便填充界面状态中的所有字段，并处理界面完全呈现所需的事件。
+<img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-ui-udf-in-action.png alt="UDF 中的事件和数据周期的示意图">
+图 6. UDF 中的事件和数据周期的示意图。</p>
+<p>以下几个部分更详细地介绍了导致状态变化的事件，以及如何使用 UDF 处理这些事件。</p>
+<h4 id=逻辑类型>逻辑类型</h4>
+<p>为报道添加书签就是一个业务逻辑示例，因为这能够为应用带来价值。如需了解详情，请参阅数据层页面。不过，还有其他类型的重要逻辑需要定义：</p>
+<ul>
+<li><strong>业务逻辑决定着如何处理状态变化</strong>。如前面所述，一个例子是在案例研究应用中为报道添加书签。业务逻辑通常位于网域层或数据层中，但绝不能位于界面层中。</li>
+<li><strong>界面行为逻辑或界面逻辑决定着如何在屏幕上显示状态变化</strong>。示例包括：使用 Android Resources 获取要在屏幕上显示的正确文本、在用户点击某个按钮时转到特定屏幕，或使用消息框或信息提示控件在屏幕上向用户显示消息。</li>
+</ul>
+<p>界面逻辑（尤其是在涉及 Context 等界面类型时）应位于界面中，而非 <code>ViewModel</code> 中。如果界面变得越来越复杂，并且您希望将界面逻辑委托给另一个类，以便有利于进行测试和关注点分离，您可以创建一个简单的类作为状态容器。在界面中创建的简单类可以采用 Android SDK 依赖项，因为它们遵循界面的生命周期；<code>ViewModel</code> 对象具有更长的生命周期。</p>
+<h4 id=为何使用-udf>为何使用 UDF？</h4>
+<p>UDF 可为状态提供周期建模（如图 4 所示）。它还可以将以下位置分离开来：状态变化来源位置、转换位置以及最终使用位置。这种分离可让界面只发挥其名称所表明的作用：通过观察状态变化来显示信息，并通过将这些变化传递给 <code>ViewModel</code> 来传递用户 intent。</p>
+<p>换句话说，UDF 有助于实现以下几点：</p>
+<ul>
+<li><strong>数据一致性</strong>。界面只有一个可信来源。</li>
+<li><strong>可测试性</strong>。状态来源是独立的，因此可独立于界面进行测试。</li>
+<li><strong>可维护性</strong>。状态的更改遵循明确定义的模式，即状态更改是用户事件及其数据拉取来源共同作用的结果。</li>
+</ul>
+<h2 id=公开界面状态>公开界面状态</h2>
+<p>定义界面状态并确定如何管理相应状态的提供后，下一步是将提供的状态发送给界面。由于您使用 UDF 管理状态的提供，因此您可以将提供的状态视为数据流，换句话说，随着时间的推移，将提供状态的多个版本。因此，您应在 <code>LiveData</code> 或 <code>StateFlow</code> 等可观察数据容器中公开界面状态。这样做是为了使界面可以对状态的任何变化做出反应，而无需直接从 <code>ViewModel</code> 手动拉取数据。这些类型还有一个好处是，始终缓存界面状态的最新版本，这对于在配置发生变化后快速恢复状态非常有用。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsViewModel</span>(<span style=color:#f92672>..</span>.) : ViewModel() {
+
+    <span style=color:#66d9ef>val</span> uiState: StateFlow&lt;NewsUiState&gt; = <span style=color:#960050;background-color:#1e0010>…</span>
+}
+</code></pre></div><p>如果向界面公开的数据相当简单，通常值得将数据封装在界面状态类型中，因为它能传达状态容器的发出与其关联的屏幕或界面元素之间的关系。此外，随着界面元素变得越来越复杂，添加界面状态的定义来容纳呈现界面元素所需的额外信息始终会更加容易。</p>
+<p>创建 <code>UiState</code> 流的一种常用方法是，将后备可变数据流作为来自 <code>ViewModel</code> 的不可变数据流进行公开，例如将 <code>MutableStateFlow&lt;UiState></code> 作为 <code>StateFlow&lt;UiState></code> 进行公开。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsViewModel</span>(<span style=color:#f92672>..</span>.) : ViewModel() {
+
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> _uiState = MutableStateFlow(NewsUiState())
+    <span style=color:#66d9ef>val</span> uiState: StateFlow&lt;NewsUiState&gt; = _uiState.asStateFlow()
+
+    <span style=color:#f92672>..</span>.
+
+}
+</code></pre></div><p>这样一来，<code>ViewModel</code> 便可以公开在内部更改状态的方法，以便发布供界面使用的更新。以需要执行异步操作的情况为例，可以使用 <code>viewModelScope</code> 启动协程，并且可以在操作完成时更新可变状态。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsViewModel</span>(
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> repository: NewsRepository,
+    <span style=color:#f92672>..</span>.
+) : ViewModel() {
+
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> _uiState = MutableStateFlow(NewsUiState())
+    <span style=color:#66d9ef>val</span> uiState: StateFlow&lt;NewsUiState&gt; = _uiState.asStateFlow()
+
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> fetchJob: Job? = <span style=color:#66d9ef>null</span>
+
+    <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>fetchArticles</span>(category: String) {
+        fetchJob<span style=color:#f92672>?.</span>cancel()
+        fetchJob = viewModelScope.launch {
+            <span style=color:#66d9ef>try</span> {
+                <span style=color:#66d9ef>val</span> newsItems = repository.newsItemsForCategory(category)
+                _uiState.update {
+                    <span style=color:#66d9ef>it</span>.copy(newsItems = newsItems)
+                }
+            } <span style=color:#66d9ef>catch</span> (ioe: IOException) {
+                <span style=color:#75715e>// Handle the error and notify the notify the UI when appropriate.
+</span><span style=color:#75715e></span>                _uiState.update {
+                    <span style=color:#66d9ef>val</span> messages = getMessagesFromThrowable(ioe)
+                    <span style=color:#66d9ef>it</span>.copy(userMessages = messages)
+                 }
+            }
+        }
+    }
+}
+</code></pre></div><p>在上面的示例中，<code>NewsViewModel</code> 类会尝试获取特定类别的报道，然后在界面状态中反映尝试结果（成功或失败），其中界面可以对其做出适当反应。</p>
+<blockquote>
+<p>注意：单向数据流有多种常用的实现，上面示例中显示的模式（通过 <code>ViewModel</code> 上的函数更改状态）便是其中的一种。</p>
+</blockquote>
+<h4 id=其他注意事项>其他注意事项</h4>
+<p>除了前面的指南之外，公开界面状态时还要考虑以下事项：</p>
+<ul>
+<li>
+<p><strong>界面状态对象应处理彼此相关的状态</strong>。 这样可以减少不一致的情况，并让代码更易于理解。如果您在两个不同的数据流中分别公开新闻报道列表和书签数量，可能会发现其中一个已更新，但另一个没有更新。当您使用单个数据流时，这两个元素都会保持最新状态。此外，某些业务逻辑可能需要组合使用数据源。例如，可能只有在用户已登录并且是付费新闻服务订阅者时，您才需要显示书签按钮。您可以按如下方式定义界面状态类：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsUiState</span>(
+    <span style=color:#66d9ef>val</span> isSignedIn: Boolean = <span style=color:#66d9ef>false</span>,
+    <span style=color:#66d9ef>val</span> isPremium: Boolean = <span style=color:#66d9ef>false</span>,
+    <span style=color:#66d9ef>val</span> newsItems: List&lt;NewsItemUiState&gt; = listOf()
+)
+
+<span style=color:#66d9ef>val</span> NewsUiState.canBookmarkNews: Boolean <span style=color:#66d9ef>get</span>() = isSignedIn <span style=color:#f92672>&amp;&amp;</span> isPremium
+</code></pre></div><p>在此声明中，书签按钮的可见性是两个其他属性的派生属性。随着业务逻辑变得越来越复杂，拥有单个 <code>UiState</code> 类，并且其中的所有属性都是立即可用的，变得越来越重要。</p>
+</li>
+<li>
+<p>**界面状态：单个数据流还是多个数据流？**是选择在单个数据流中还是在多个数据流中公开界面状态，关键指导原则是前面提到的要点：发出的内容之间的关系。在单个数据流中进行公开的最大优势是便捷性和数据一致性：状态的使用方随时都能立即获取最新信息。不过，在有些情况下，可能适合使用来自 <code>ViewModel</code> 的单独的状态流：</p>
+<ul>
+<li>
+<p>不相关的数据类型：呈现界面所需的某些状态可能是完全相互独立的。在此类情况下，将这些不同的状态捆绑在一起的代价可能会超过其优势，尤其是当其中某个状态的更新频率高于其他状态的更新频率时。</p>
+</li>
+<li>
+<p>UiState diffing：UiState 对象中的字段越多，数据流就越有可能因为其中一个字段被更新而发出。由于视图没有 diffing 机制来了解连续发出的数据流是否相同，因此每次发出都会导致视图更新。这意味着，可能必须要对 LiveData 使用 Flow API 或 distinctUntilChanged() 等方法来缓解这个问题。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id=使用界面状态>使用界面状态</h2>
+<p>如需在界面中使用 <code>UiState</code> 对象流，您可以对所使用的可观察数据类型使用终端运算符。例如，对于 <code>LiveData</code>，您可以使用 <code>observe()</code> 方法；对于 <code>Kotlin</code> 数据流，您可以使用 <code>collect()</code> 方法或其变体。</p>
+<p>在界面中使用可观察数据容器时，请务必考虑界面的生命周期。这非常重要，因为当未向用户显示视图时，界面不应观察界面状态。使用 <code>LiveData</code> 时，<code>LifecycleOwner</code> 会隐式处理生命周期问题。使用数据流时，最好通过适当的协程作用域和 <code>repeatOnLifecycle</code> API 来处理这一任务：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsActivity</span> : AppCompatActivity() {
+
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> viewModel: NewsViewModel <span style=color:#66d9ef>by</span> viewModels()
+
+    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onCreate</span>(savedInstanceState: Bundle?) {
+        <span style=color:#f92672>..</span>.
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    <span style=color:#75715e>// Update UI elements
+</span><span style=color:#75715e></span>                }
+            }
+        }
+    }
+}
+</code></pre></div><blockquote>
+<p>注意：在没有处于活跃状态的收集器时，本示例中使用的具体 <code>StateFlow</code> 对象不会停止执行工作，但您在处理数据流时，可能并不知道它们是如何实现的。借助生命周期感知型数据流收集功能，您可以在以后对 <code>ViewModel</code> 数据流进行这些类型的更改，而无需重新访问下游收集器代码。</p>
+</blockquote>
+<h4 id=显示正在执行的操作>显示正在执行的操作</h4>
+<p>在 <code>UiState</code> 类中表示加载状态的一种简单方法是使用布尔值字段：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsUiState</span>(
+    <span style=color:#66d9ef>val</span> isFetchingArticles: Boolean = <span style=color:#66d9ef>false</span>,
+    <span style=color:#f92672>..</span>.
+)
+</code></pre></div><p>此标记的值表示界面中是否存在进度条。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsActivity</span> : AppCompatActivity() {
+
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> viewModel: NewsViewModel <span style=color:#66d9ef>by</span> viewModels()
+
+    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onCreate</span>(savedInstanceState: Bundle?) {
+        <span style=color:#f92672>..</span>.
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                <span style=color:#75715e>// Bind the visibility of the progressBar to the state
+</span><span style=color:#75715e></span>                <span style=color:#75715e>// of isFetchingArticles.
+</span><span style=color:#75715e></span>                viewModel.uiState
+                    .map { <span style=color:#66d9ef>it</span>.isFetchingArticles }
+                    .distinctUntilChanged()
+                    .collect { progressBar.isVisible = <span style=color:#66d9ef>it</span> }
+            }
+        }
+    }
+}
+</code></pre></div><h4 id=在屏幕上显示错误>在屏幕上显示错误</h4>
+<p>在界面中显示错误与显示正在执行的操作类似，因为无论是错误，还是正在执行的操作，都能通过用于表明它们是否存在的布尔值来轻松表示。不过，错误可能还包括要传回给用户的关联消息，或包含与其关联的操作（旨在重试失败的操作）。因此，无论正在执行的操作是否正在加载，可能都需要使用托管以下数据的数据类对错误状态进行建模：适合错误上下文的元数据。</p>
+<p>以上一部分中的示例为例，它在获取报道时会显示进度条。如果此操作导致错误，您可能希望向用户显示一条或多条消息，详细说明出现了什么错误。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Message</span>(<span style=color:#66d9ef>val</span> id: Long, <span style=color:#66d9ef>val</span> message: String)
+
+<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsUiState</span>(
+    <span style=color:#66d9ef>val</span> userMessages: List&lt;Message&gt; = listOf(),
+    <span style=color:#f92672>..</span>.
+)
+</code></pre></div><p>然后，错误消息便能够以界面元素（例如信息提示控件）的形式呈现给用户。</p>
+<h2 id=线程处理和并发>线程处理和并发</h2>
+<p>在 <code>ViewModel</code> 中执行的所有工作都应具有主线程安全性（即从主线程调用是安全的）。这是因为数据层和网域层负责将工作移至其他线程。</p>
+<p>如果 <code>ViewModel</code> 执行长时间运行的操作，则还要负责将相应逻辑移至后台线程。Kotlin 协程是管理并发操作的绝佳方式，Jetpack 架构组件则为其提供内置支持</p>
+<h2 id=导航>导航</h2>
+<p>应用导航的变化通常是由类似于事件的发出操作驱动的。例如，在 <code>SignInViewModel</code> 类执行登录后，<code>UiState</code> 可能会有一个 <code>isSignedIn</code> 字段被设为 <code>true</code>。此类触发器的使用方式应与上面使用界面状态部分介绍的方式相同，不过使用实现应遵从导航组件。</p>
+<h2 id=paging>Paging</h2>
+<p>Paging 库通过一个称为 <code>PagingData</code> 的类型在界面中使用。由于 <code>PagingData</code>表示并包含可以随时间变化的内容（换句话说，它不是不可变类型），因此它不应以不可变界面状态表示。相反，您应在单独的流中独立地从 <code>ViewModel</code> 中公开它。</p>
+<h2 id=动画>动画</h2>
+<p>为了提供流畅的顶级导航过渡，您可能需要等待第二个屏幕加载数据，然后再启动动画。Android 视图框架提供了一些钩子，以便通过 <code>postponeEnterTransition()</code> 和 <code>startPostponedEnterTransition()</code> API 延迟 fragment 目的地之间的过渡。这些 API 提供了一种方法来确保做到以下一点：在界面通过动画过渡到第二个屏幕之前，第二个屏幕上的界面元素（通常是从网络获取的图片）已做好显示准备</p></article>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>window.onload=function(){const a=document.getElementById('post-header'),b=a.offsetHeight;document.documentElement.style.scrollPaddingTop=b+10+"px"};const tocToggleButton=document.getElementById("toc-toggle"),tippyInstance=tippy('#toc-toggle',{trigger:'click',content:'<div id="table-of-contents">\u003cnav id=\u0022TableOfContents\u0022\u003e\n  \u003cul\u003e\n    \u003cli\u003e\u003ca href=\u0022#基本案例研究\u0022\u003e基本案例研究\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#界面层架构\u0022\u003e界面层架构\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#定义界面状态\u0022\u003e定义界面状态\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#使用单向数据流管理状态\u0022\u003e使用单向数据流管理状态\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#公开界面状态\u0022\u003e公开界面状态\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#使用界面状态\u0022\u003e使用界面状态\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#线程处理和并发\u0022\u003e线程处理和并发\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#导航\u0022\u003e导航\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#paging\u0022\u003ePaging\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#动画\u0022\u003e动画\u003c/a\u003e\u003c/li\u003e\n  \u003c/ul\u003e\n\u003c/nav\u003e</div>',allowHTML:!0,placement:'bottom-start',interactive:!0,arrow:!1,maxWidth:"none",onHide:function(){tocToggleButton.classList.remove("hover")},onShow:function(){tocToggleButton.classList.add("hover")},onShown:function(){if(selectTableOfContentsOption(),window.hasSetupTableOfContentsListeners)return;const a=document.getElementById("table-of-contents");a.addEventListener('click',function(){tippyInstance[0].hide()}),window.hasSetupTableOfContentsListeners=!0}});function selectTableOfContentsOption(){const a='table-of-contents-option-selected',b=document.querySelectorAll("#table-of-contents > nav > ul li");for(const d of b){const[c]=d.children;if(c.tagName.toLowerCase()!=='a')continue;window.location.href===c.href?c.classList.add(a):c.classList.remove(a)}}window.onhashchange=selectTableOfContentsOption</script>
+<div class="footer container-xl width-full p-responsive">
+<div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light">
+<a aria-label=Homepage title=GitHub class="footer-octicon d-none d-lg-block mr-lg-4" href=https://chenjiuling.github.io/><svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+<ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+<li class="mr-3 mr-lg-0">Theme by <a href=https://github.com/MeiK2333/github-style>github-style</a></li>
+</ul>
+</div>
+<div class="d-flex flex-justify-center pb-6">
+<span class="f6 text-gray-light"></span>
+</div>
+</div>
+</body>
+<script type=application/javascript src=https://chenjiuling.github.io/js/github-style.js></script>
+</html>
