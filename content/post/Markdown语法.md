@@ -2,7 +2,6 @@
 title: "Markdown语法"
 date: 2022-01-07T22:11:54+08:00
 draft: false
-pin: true
 ---
 
 ### 段落和换行

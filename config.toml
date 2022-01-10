@@ -1,10 +1,10 @@
 baseURL = 'https://chenjiuling.github.io/'
 languageCode = 'zh-cn'
-title = "chenjiuling - 在阅读中遇见自己"
+title = "在阅读中遇见自己"
 theme = "github-style"
 
 [params]
-  author = "chenjiuling"
+  author = "chenjie"
   description = "在阅读中遇见自己"
   github = "chenjiuling"
   facebook = ""
