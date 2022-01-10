@@ -12,30 +12,21 @@
 <title>安卓开发应用架构指南 - chenjiuling - 在阅读中遇见自己</title>
 <link rel=icon type=image/x-icon href=/images/github.png>
 <meta name=theme-color content="#1e2327">
-<meta name=description content="常见的架构原则 如果您不应使用应用组件存储应用数据和状态，那么您应该改为如何设计应用呢？
-随着 Android 应用大小不断增加，您定义的架构务必要能允许应用扩缩、提升应用的稳健性并且方便对应用进行测试。
-应用架构定义了应用的各个部分之间的界限以及每个部分应承担的职责。为了满足上述需求，您应该按照某些特定原则设计应用架构。
-分离关注点 要遵循的最重要的原则是分离关注点。 一种常见的错误是在一个 Activity 或 Fragment 中编写所有代码。这些基于界面的类应仅包含处理界面和操作系统交互的逻辑。您应使这些类尽可能保持精简，这样可以避免许多与组件生命周期相关的问题，并提高这些类的可测试性。
+<meta name=description content="典型的 Android 应用包含多个应用组件，包括 Activity、Fragment、Service、内容提供程序和广播接收器。您需要在应用清单中声明其中的大多数应用组件。Android 操作系统随后会使用此文件来决定如何将您的应用集成到设备的整体用户体验中。鉴于典型的 Android 应用可能包含多个组件，并且用户经常会在短时间内与多个应用进行互动，因此应用需要适应不同类型的用户驱动型工作流和任务。
 ">
 <meta name=keywords content="blog,android">
 <meta name=robots content="noodp">
 <link rel=canonical href=https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E6%8C%87%E5%8D%97/>
 <meta name=twitter:card content="summary">
 <meta name=twitter:title content="安卓开发应用架构指南 - chenjiuling - 在阅读中遇见自己">
-<meta name=twitter:description content="常见的架构原则 如果您不应使用应用组件存储应用数据和状态，那么您应该改为如何设计应用呢？
-随着 Android 应用大小不断增加，您定义的架构务必要能允许应用扩缩、提升应用的稳健性并且方便对应用进行测试。
-应用架构定义了应用的各个部分之间的界限以及每个部分应承担的职责。为了满足上述需求，您应该按照某些特定原则设计应用架构。
-分离关注点 要遵循的最重要的原则是分离关注点。 一种常见的错误是在一个 Activity 或 Fragment 中编写所有代码。这些基于界面的类应仅包含处理界面和操作系统交互的逻辑。您应使这些类尽可能保持精简，这样可以避免许多与组件生命周期相关的问题，并提高这些类的可测试性。
+<meta name=twitter:description content="典型的 Android 应用包含多个应用组件，包括 Activity、Fragment、Service、内容提供程序和广播接收器。您需要在应用清单中声明其中的大多数应用组件。Android 操作系统随后会使用此文件来决定如何将您的应用集成到设备的整体用户体验中。鉴于典型的 Android 应用可能包含多个组件，并且用户经常会在短时间内与多个应用进行互动，因此应用需要适应不同类型的用户驱动型工作流和任务。
 ">
 <meta name=twitter:site content="https://chenjiuling.github.io/">
 <meta name=twitter:creator content>
 <meta name=twitter:image content="https://chenjiuling.github.io/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="安卓开发应用架构指南 - chenjiuling - 在阅读中遇见自己">
-<meta property="og:description" content="常见的架构原则 如果您不应使用应用组件存储应用数据和状态，那么您应该改为如何设计应用呢？
-随着 Android 应用大小不断增加，您定义的架构务必要能允许应用扩缩、提升应用的稳健性并且方便对应用进行测试。
-应用架构定义了应用的各个部分之间的界限以及每个部分应承担的职责。为了满足上述需求，您应该按照某些特定原则设计应用架构。
-分离关注点 要遵循的最重要的原则是分离关注点。 一种常见的错误是在一个 Activity 或 Fragment 中编写所有代码。这些基于界面的类应仅包含处理界面和操作系统交互的逻辑。您应使这些类尽可能保持精简，这样可以避免许多与组件生命周期相关的问题，并提高这些类的可测试性。
+<meta property="og:description" content="典型的 Android 应用包含多个应用组件，包括 Activity、Fragment、Service、内容提供程序和广播接收器。您需要在应用清单中声明其中的大多数应用组件。Android 操作系统随后会使用此文件来决定如何将您的应用集成到设备的整体用户体验中。鉴于典型的 Android 应用可能包含多个组件，并且用户经常会在短时间内与多个应用进行互动，因此应用需要适应不同类型的用户驱动型工作流和任务。
 ">
 <meta property="og:url" content="https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E6%8C%87%E5%8D%97/">
 <meta property="og:site_name" content="安卓开发应用架构指南">
@@ -99,8 +90,8 @@
 Created <relative-time datetime="Mon, 10 Jan 2022 14:11:54 +0800" class=no-wrap>
 Mon, 10 Jan 2022 14:11:54 +0800</relative-time>
 <span class=file-info-divider></span>
-Modified <relative-time datetime="Mon, 10 Jan 2022 11:21:55 +0000" class=no-wrap>
-Mon, 10 Jan 2022 11:21:55 +0000</relative-time>
+Modified <relative-time datetime="Mon, 10 Jan 2022 12:35:34 +0000" class=no-wrap>
+Mon, 10 Jan 2022 12:35:34 +0000</relative-time>
 </div>
 </div>
 </div>
@@ -118,14 +109,17 @@ Mon, 10 Jan 2022 11:21:55 +0000</relative-time>
 <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
 <summary id=toc-toggle class="btn btn-octicon m-0 mr-2 p-2" aria-haspopup=menu aria-label="Table of Contents" role=button><svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered"><path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zM3 8A1 1 0 111 8a1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
 </summary>
-2727 Words
+3053 Words
 </div>
 <div class="file-actions flex-order-2 pt-0">
 </div>
 </div>
 </div>
 <div class="Box-body px-5 pb-5">
-<article class="markdown-body entry-content container-lg"><h2 id=常见的架构原则>常见的架构原则</h2>
+<article class="markdown-body entry-content container-lg"><p>典型的 Android 应用包含多个应用组件，包括 Activity、Fragment、Service、内容提供程序和广播接收器。您需要在应用清单中声明其中的大多数应用组件。Android 操作系统随后会使用此文件来决定如何将您的应用集成到设备的整体用户体验中。鉴于典型的 Android 应用可能包含多个组件，并且用户经常会在短时间内与多个应用进行互动，因此应用需要适应不同类型的用户驱动型工作流和任务。</p>
+<p>请注意，移动设备的资源也很有限，因此操作系统可能随时终止某些应用进程以便为新的进程腾出空间。</p>
+<p>鉴于这种环境条件，您的应用组件可以不按顺序地单独启动，并且操作系统或用户可以随时销毁它们。由于这些事件不受您的控制，因此您不应在内存中存储或保留任何应用数据或状态，并且应用组件不应相互依赖。</p>
+<h2 id=常见的架构原则>常见的架构原则</h2>
 <p>如果您不应使用应用组件存储应用数据和状态，那么您应该改为如何设计应用呢？</p>
 <p>随着 Android 应用大小不断增加，您定义的架构务必要能允许应用扩缩、提升应用的稳健性并且方便对应用进行测试。</p>
 <p>应用架构定义了应用的各个部分之间的界限以及每个部分应承担的职责。为了满足上述需求，您应该按照某些特定原则设计应用架构。</p>

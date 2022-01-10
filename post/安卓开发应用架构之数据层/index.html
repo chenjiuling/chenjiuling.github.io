@@ -12,24 +12,21 @@
 <title>安卓开发应用架构之数据层 - chenjiuling - 在阅读中遇见自己</title>
 <link rel=icon type=image/x-icon href=/images/github.png>
 <meta name=theme-color content="#1e2327">
-<meta name=description content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。
-这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
+<meta name=description content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。 这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
 ">
 <meta name=keywords content="blog,android">
 <meta name=robots content="noodp">
 <link rel=canonical href=https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B1%82/>
 <meta name=twitter:card content="summary">
 <meta name=twitter:title content="安卓开发应用架构之数据层 - chenjiuling - 在阅读中遇见自己">
-<meta name=twitter:description content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。
-这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
+<meta name=twitter:description content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。 这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
 ">
 <meta name=twitter:site content="https://chenjiuling.github.io/">
 <meta name=twitter:creator content>
 <meta name=twitter:image content="https://chenjiuling.github.io/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="安卓开发应用架构之数据层 - chenjiuling - 在阅读中遇见自己">
-<meta property="og:description" content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。
-这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
+<meta property="og:description" content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。 这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
 ">
 <meta property="og:url" content="https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B1%82/">
 <meta property="og:site_name" content="安卓开发应用架构之数据层">
@@ -93,8 +90,8 @@
 Created <relative-time datetime="Mon, 10 Jan 2022 14:11:54 +0800" class=no-wrap>
 Mon, 10 Jan 2022 14:11:54 +0800</relative-time>
 <span class=file-info-divider></span>
-Modified <relative-time datetime="Mon, 10 Jan 2022 11:21:55 +0000" class=no-wrap>
-Mon, 10 Jan 2022 11:21:55 +0000</relative-time>
+Modified <relative-time datetime="Mon, 10 Jan 2022 12:35:34 +0000" class=no-wrap>
+Mon, 10 Jan 2022 12:35:34 +0000</relative-time>
 </div>
 </div>
 </div>
@@ -119,8 +116,8 @@ Mon, 10 Jan 2022 11:21:55 +0000</relative-time>
 </div>
 </div>
 <div class="Box-body px-5 pb-5">
-<article class="markdown-body entry-content container-lg"><p>界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。</p>
-<p>这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。</p>
+<article class="markdown-body entry-content container-lg"><p>界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。
+这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。</p>
 <h2 id=数据层架构>数据层架构</h2>
 <p>数据层由多个存储库组成，其中每个存储库都可以包含零到多个数据源。您应该为应用中处理的每种不同类型的数据分别创建一个存储库类。例如，您可以为与电影相关的数据创建一个 <code>MoviesRepository</code> 类，或者为与付款相关的数据创建一个 <code>PaymentsRepository</code> 类。
 <img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-data-overview.png alt=界面层在应用架构中的作用>
