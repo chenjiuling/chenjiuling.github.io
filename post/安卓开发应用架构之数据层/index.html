@@ -1,0 +1,439 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width">
+<script type=application/javascript src=https://chenjiuling.github.io/js/theme-mode.js></script>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/frameworks.min.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/github.min.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/github-style.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/light.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/dark.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/syntax.css>
+<title>安卓开发应用架构之数据层 - chenjiuling - 在阅读中遇见自己</title>
+<link rel=icon type=image/x-icon href=/images/github.png>
+<meta name=theme-color content="#1e2327">
+<meta name=description content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。
+这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
+">
+<meta name=keywords content="blog,android">
+<meta name=robots content="noodp">
+<link rel=canonical href=https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B1%82/>
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="安卓开发应用架构之数据层 - chenjiuling - 在阅读中遇见自己">
+<meta name=twitter:description content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。
+这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
+">
+<meta name=twitter:site content="https://chenjiuling.github.io/">
+<meta name=twitter:creator content>
+<meta name=twitter:image content="https://chenjiuling.github.io/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓开发应用架构之数据层 - chenjiuling - 在阅读中遇见自己">
+<meta property="og:description" content="界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。
+这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。
+">
+<meta property="og:url" content="https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B1%82/">
+<meta property="og:site_name" content="安卓开发应用架构之数据层">
+<meta property="og:image" content="https://chenjiuling.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:published_time" content="2022-01-10 14:11:54 +0800 +0800">
+</head>
+<body>
+<div style=position:relative>
+<header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+<div class="Header-item mobile-none" style=margin-top:-4px;margin-bottom:-4px>
+<a class=Header-link href=https://chenjiuling.github.io/><svg class="octicon" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+</div>
+<div class="Header-item d-md-none">
+<button class="Header-link btn-link js-details-target" type=button onclick="document.querySelector('#header-search').style.display=document.querySelector('#header-search').style.display=='none'?'block':'none'"><svg height="24" class="octicon octicon-three-bars" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M1 2.75A.75.75.0 011.75 2h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 2.75zm0 5A.75.75.0 011.75 7h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 7.75zM1.75 12a.75.75.0 100 1.5h12.5a.75.75.0 100-1.5H1.75z"/></svg>
+</button>
+</div>
+<div style=display:none id=header-search class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+<div class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+<div class=position-relative>
+<form target=_blank action=https://www.google.com/search accept-charset=utf-8 method=get autocomplete=off>
+<label class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+<input type=text class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable" name=q placeholder=Search autocomplete=off>
+<input type=hidden name=q value=site:https://chenjiuling.github.io/>
+</label>
+</form>
+</div>
+</div>
+</div>
+<div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+<a class=Header-link href=https://chenjiuling.github.io/><svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+</div>
+<div class=Header-item style=margin-right:0>
+<a href=javascript:void(0) class="Header-link no-select" onclick=switchTheme()><svg style="fill:var(--color-profile-color-modes-toggle-moon)" class="no-select" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.52208 7.71754c3.05612.0 5.53362-2.47748 5.53362-5.5336C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961 9.95801 1.07727 10.3495.771159 10.6474.99992c1.4679 1.12724 2.4141 2.90007 2.4141 4.89391.0 3.40575-2.7609 6.16667-6.16665 6.16667-2.94151.0-5.40199-2.0595-6.018122-4.81523C.794841 6.87902 1.23668 6.65289 1.55321 6.85451 2.41106 7.40095 3.4296 7.71754 4.52208 7.71754z"/></svg>
+</a>
+</div>
+</header>
+</div>
+<script src=https://unpkg.com/@popperjs/core@2></script>
+<script src=https://unpkg.com/tippy.js@6></script>
+<div>
+<main>
+<div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+<div class=px-0>
+<div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+<div class="flex-auto min-width-0 width-fit mr-3">
+<div class=d-flex>
+<div class="d-none d-md-block">
+<a class="avatar mr-2 flex-shrink-0" href=https://chenjiuling.github.io/>
+<img class=avatar-user src=https://chenjiuling.github.io/images/avatar.png width=32 height=32></a>
+</div>
+<div class="d-flex flex-column">
+<h1 class="break-word f3 text-normal mb-md-0 mb-1">
+<span class=author>
+<a href=https://chenjiuling.github.io/>chenjiuling</a></span><span class=path-divider>/</span><strong class="css-truncate-target mr-1" style=max-width:410px><a href=https://chenjiuling.github.io/post/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%B1%82/>安卓开发应用架构之数据层</a></strong>
+</h1>
+<div class="note m-0">
+Created <relative-time datetime="Mon, 10 Jan 2022 14:11:54 +0800" class=no-wrap>
+Mon, 10 Jan 2022 14:11:54 +0800</relative-time>
+<span class=file-info-divider></span>
+Modified <relative-time datetime="Mon, 10 Jan 2022 10:42:15 +0000" class=no-wrap>
+Mon, 10 Jan 2022 10:42:15 +0000</relative-time>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-lg px-3 new-discussion-timeline">
+<div class="repository-content gist-content">
+<div>
+<div class="js-gist-file-update-container js-task-list-container file-box">
+<div id=file-pytest class="file my-2">
+<div id=post-header class="file-header d-flex flex-md-items-center flex-items-start sticky-header">
+<div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+<div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+<summary id=toc-toggle class="btn btn-octicon m-0 mr-2 p-2" aria-haspopup=menu aria-label="Table of Contents" role=button><svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered"><path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zM3 8A1 1 0 111 8a1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+</summary>
+7495 Words
+</div>
+<div class="file-actions flex-order-2 pt-0">
+</div>
+</div>
+</div>
+<div class="Box-body px-5 pb-5">
+<article class="markdown-body entry-content container-lg"><p>界面层包含与界面相关的状态和界面逻辑，数据层则包含应用数据和业务逻辑。业务逻辑决定应用的价值，它由现实世界的业务规则组成，这些规则决定着应用数据的创建、存储和更改方式。</p>
+<p>这种关注点分离使得数据层可用于多个屏幕、在应用的不同部分之间共享信息，以及在界面以外复制业务逻辑以进行单元测试。</p>
+<h2 id=数据层架构>数据层架构</h2>
+<p>数据层由多个存储库组成，其中每个存储库都可以包含零到多个数据源。您应该为应用中处理的每种不同类型的数据分别创建一个存储库类。例如，您可以为与电影相关的数据创建一个 <code>MoviesRepository</code> 类，或者为与付款相关的数据创建一个 <code>PaymentsRepository</code> 类。
+<img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-data-overview.png alt=界面层在应用架构中的作用>
+图 1. 界面层在应用架构中的作用。</p>
+<p>存储库类负责以下任务：</p>
+<ul>
+<li>向应用的其余部分公开数据。</li>
+<li>集中处理数据变化。</li>
+<li>解决多个数据源之间的冲突。</li>
+<li>对应用其余部分的数据源进行抽象化处理。</li>
+<li>包含业务逻辑。</li>
+</ul>
+<p>每个数据源类应仅负责处理一个数据源，相应数据源可以是文件、网络来源或本地数据库。数据源类是应用与负责数据操作的系统之间的桥梁。</p>
+<p>层次结构中的其他层绝不能直接访问数据源；数据层的入口点始终是存储库类。状态容器类或用例类绝不能将数据源作为直接依赖项。如果使用存储库类作为入口点，架构的不同层便可以独立扩缩。</p>
+<p>该层公开的数据应该是不可变的，这样就可以避免数据被其他类篡改，从而避免数值不一致的风险。不可变数据也可以由多个线程安全地处理。</p>
+<p>按照依赖项注入方面的最佳实践，存储库应在其构造函数中将数据源作为依赖项：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ExampleRepository</span>(
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> exampleRemoteDataSource: ExampleRemoteDataSource, <span style=color:#75715e>// network
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> exampleLocalDataSource: ExampleLocalDataSource <span style=color:#75715e>// database
+</span><span style=color:#75715e></span>) { <span style=color:#75715e>/* ... */</span> }
+</code></pre></div><blockquote>
+<p>注意：通常，如果存储库只包含单个数据源并且不依赖于其他存储库，开发者会将存储库和数据源的职责合并到存储库类中。这种情况下，在应用的更高版本中，如果存储库需要处理来自其他来源的数据，请不要忘记拆分这些功能。</p>
+</blockquote>
+<h2 id=公开-api>公开 API</h2>
+<p>数据层中的类通常会公开函数，以执行一次性的创建、读取、更新和删除 (CRUD) 调用，或接收关于数据随时间变化的通知。对于每种情况，数据层都应公开以下内容：</p>
+<ul>
+<li><strong>一次性操作</strong>：在 Kotlin 中，数据层应公开挂起函数；对于 Java 编程语言，数据层应公开用于提供回调来通知操作结果的函数，或公开 RxJava Single、Maybe 或 Completable 类型。</li>
+<li><strong>接收关于数据随时间变化的通知</strong>：在 Kotlin 中，数据层应公开数据流；对于 Java 编程语言，数据层应公开用于发出新数据的回调，或公开 RxJava Observable 或 Flowable 类型。</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ExampleRepository</span>(
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> exampleRemoteDataSource: ExampleRemoteDataSource, <span style=color:#75715e>// network
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> exampleLocalDataSource: ExampleLocalDataSource <span style=color:#75715e>// database
+</span><span style=color:#75715e></span>) {
+
+    <span style=color:#66d9ef>val</span> data: Flow&lt;Example&gt; = <span style=color:#f92672>..</span>.
+
+    <span style=color:#66d9ef>suspend</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>modifyData</span>(example: Example) { <span style=color:#f92672>..</span>. }
+}
+</code></pre></div><h2 id=本指南中的命名惯例>本指南中的命名惯例</h2>
+<p>在本指南中，存储库类以其负责的数据命名。具体命名惯例如下：</p>
+<p>数据类型 + Repository。</p>
+<p>例如：<code>NewsRepository</code>、<code>MoviesRepository</code> 或 <code>PaymentsRepository</code>。</p>
+<p>数据源类以其负责的数据以及使用的来源命名。具体命名惯例如下：</p>
+<p>数据类型 + 来源类型 + DataSource。</p>
+<p>对于数据的类型，可以使用 Remote 或 Local，以使其更加通用，因为实现是可以变化的。例如：<code>NewsRemoteDataSource</code> 或 <code>NewsLocalDataSource</code>。在来源非常重要的情况下，为了更加具体，可以使用来源的类型。例如：<code>NewsNetworkDataSource</code> 或 <code>NewsDiskDataSource</code>。</p>
+<p>请勿根据实现细节来为数据源命名（例如 <code>UserSharedPreferencesDataSource</code>），因为使用相应数据源的存储库应该不知道数据是如何保存的。如果您遵循此规则，便可以更改数据源的实现（例如，从 SharedPreferences 迁移到 DataStore），而不会影响调用相应数据源的层。</p>
+<blockquote>
+<p>注意：迁移到数据源的新实现时，您可以为数据源创建接口，并使用两种数据源实现：一种用于旧的后备技术，另一种用于新的技术。在这种情况下，您可以将技术名称用作数据源类名称（尽管它是一个实现细节），因为存储库只能看到接口，而看不到数据源类本身。完成迁移后，您可以重命名新类，使其名称中不包含实现细节。</p>
+</blockquote>
+<h2 id=多层存储库>多层存储库</h2>
+<p>在某些涉及更复杂业务要求的情况下，存储库可能需要依赖于其他存储库。这可能是因为所涉及的数据是来自多个数据源的数据聚合，或者是因为相应职责需要封装在其他存储库类中。</p>
+<p>例如，负责处理用户身份验证数据的存储库 <code>UserRepository</code> 可以依赖于其他存储库（例如 <code>LoginRepository</code> 和 <code>RegistrationRepository</code>），以满足其要求。
+<img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-data-multiple-repos.png alt=某个存储库与其他存储库的依赖关系图>
+图 2. 某个存储库与其他存储库的依赖关系图。</p>
+<blockquote>
+<p>注意：传统上，一些开发者将依赖于其他存储库类的存储库类称为 manager，例如称为 UserManager 而非 UserRepository。如果您愿意，可以使用此命名惯例。</p>
+</blockquote>
+<h2 id=可信来源>可信来源</h2>
+<p>每个存储库都只定义单个可信来源，这一点非常重要。可信来源始终包含一致、正确且最新的数据。实际上，从存储库公开的数据应始终是直接来自可信来源的数据。</p>
+<p>可信来源可以是数据源（例如数据库），甚至可以是存储库可能包含的内存中缓存。存储库可合并不同的数据源，并解决数据源之间的所有潜在冲突，以便定期更新或因应用户输入事件更新单个可信来源。</p>
+<p>应用中的不同存储库可以具有不同的可信来源。例如，<code>LoginRepository</code> 类可以将其缓存用作可信来源，<code>PaymentsRepository</code> 类则可以使用网络数据源。</p>
+<p>为了提供离线优先支持，<strong>建议使用本地数据源（例如数据库）作为可信来源</strong>。</p>
+<h2 id=线程处理>线程处理</h2>
+<p>调用数据源和存储库应该具有主线程安全性（即从主线程调用是安全的）。在执行长时间运行的阻塞操作时，这些类负责将其逻辑的执行移至适当的线程。例如，对于数据源，从文件读取数据应该具有主线程安全性；对于存储库，对大列表执行非常耗费资源的过滤应该具有主线程安全性。</p>
+<p>请注意，大部分数据源都已提供具有主线程安全性的 API，例如 Room 或 Retrofit 提供的挂起方法调用。在这些 API 可用时，您的存储库可以充分利用它们。</p>
+<p>如需详细了解线程处理，请参阅后台处理指南。对于 Kotlin 用户，建议使用协程。</p>
+<h2 id=生命周期>生命周期</h2>
+<p>数据层中的类的实例会保留在内存中，前提是它们可以从垃圾回收根访问 - 通常是从应用中的其他对象引用。</p>
+<p>如果某个类包含内存中的数据（例如缓存），您可能希望在特定时间段内重复使用该类的同一实例。这也称为类实例的生命周期。</p>
+<p>如果该类的职责对于整个应用至关重要，您可以将该类的实例的作用域限定为 <code>Application</code> 类。这可让该实例遵循应用的生命周期。或者，如果您只需要在应用内的特定流程（例如注册流程或登录流程）中重复使用同一实例，则应将该实例的作用域限定为负责相应流程的生命周期的类。例如，您可以将包含内存中数据的 <code>RegistrationRepository</code> 的作用域限定为 <code>RegistrationActivity</code>，或限定为注册流程的导航图。</p>
+<p>每个实例的生命周期都是决定如何在应用内提供依赖项的关键因素。建议您遵循依赖项注入方面的最佳实践来管理依赖项，并可以将依赖项的作用域限定为依赖项容器。</p>
+<h2 id=表示业务模式>表示业务模式</h2>
+<p>您想要从数据层公开的数据模型可能是您从不同数据源获取的信息的子集。理想情况下，不同数据源（网络数据源和本地数据源）应该只返回应用需要的信息；但通常并非如此。</p>
+<p>例如，假设有一个 News API 服务器，它不仅返回报道信息，还会返回修改记录、用户评论和部分元数据：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ArticleApiModel</span>(
+    <span style=color:#66d9ef>val</span> id: Long,
+    <span style=color:#66d9ef>val</span> title: String,
+    <span style=color:#66d9ef>val</span> content: String,
+    <span style=color:#66d9ef>val</span> publicationDate: Date,
+    <span style=color:#66d9ef>val</span> modifications: Array&lt;ArticleApiModel&gt;,
+    <span style=color:#66d9ef>val</span> comments: Array&lt;CommentApiModel&gt;,
+    <span style=color:#66d9ef>val</span> lastModificationDate: Date,
+    <span style=color:#66d9ef>val</span> authorId: Long,
+    <span style=color:#66d9ef>val</span> authorName: String,
+    <span style=color:#66d9ef>val</span> authorDateOfBirth: Date,
+    <span style=color:#66d9ef>val</span> readTimeMin: Int
+)
+</code></pre></div><p>该应用不需要这么多关于报道的信息，因为它在屏幕上只显示报道内容，以及关于作者的基本信息。一种很好的做法是，分离模型类，并让存储库仅公开层次结构的其他层所需的数据。例如，以下代码段展示了您可以如何从网络中删减 <code>ArticleApiModel</code>，以便将 <code>Article</code> 模型类公开给网域层和界面层：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Article</span>(
+    <span style=color:#66d9ef>val</span> id: Long,
+    <span style=color:#66d9ef>val</span> title: String,
+    <span style=color:#66d9ef>val</span> content: String,
+    <span style=color:#66d9ef>val</span> publicationDate: Date,
+    <span style=color:#66d9ef>val</span> authorName: String,
+    <span style=color:#66d9ef>val</span> readTimeMin: Int
+)
+</code></pre></div><p>分离模型类可以带来以下好处：</p>
+<ul>
+<li>将数据减少到只包含需要的内容，从而节省应用内存。</li>
+<li>根据应用所使用的数据类型来调整外部数据类型 - 例如，应用可以使用不同的数据类型来表示日期。</li>
+<li>更好地分离关注点 - 例如，如果预先定义了模型类，大型团队的成员便可以在功能的网络层和界面层单独开展工作。</li>
+</ul>
+<p>您可以扩展这种做法，并可以在应用架构的其他部分（例如，在数据源类和 <code>ViewModel</code> 中）定义单独的模型类。不过，这需要您定义额外的类和逻辑，并且您应正确记录和测试这些类和逻辑。<strong>至少，我们建议您在数据源接收的数据与应用其余部分所需的数据不符时，创建新模型</strong>。</p>
+<h2 id=数据操作类型>数据操作类型</h2>
+<p>数据层可以处理的操作类型会因操作的重要程度而异：面向界面的操作、面向应用的操作和面向业务的操作。</p>
+<h4 id=面向界面的操作>面向界面的操作</h4>
+<p>面向界面的操作仅在用户位于特定屏幕上时才相关，当用户离开相应屏幕时便会被取消。例如，显示从数据库获取的部分数据。</p>
+<p>面向界面的操作通常由界面层触发，并且遵循调用方的生命周期，例如 <code>ViewModel</code> 的生命周期。如需查看面向界面的操作的示例，请参阅发出网络请求部分。</p>
+<h4 id=面向应用的操作>面向应用的操作</h4>
+<p>只要应用处于打开状态，面向应用的操作就一直相关。如果应用关闭或进程终止，这些操作将会被取消。例如，缓存网络请求结果，以便在以后需要时使用。如需了解详情，请参阅实现内存中数据缓存部分。</p>
+<p>这些操作通常遵循 <code>Application</code> 类或数据层的生命周期。如需查看示例，请参阅让操作拥有比屏幕更长的生命周期部分。</p>
+<h4 id=面向业务的操作>面向业务的操作</h4>
+<p>面向业务的操作无法取消。它们应该会在进程终止后继续执行。例如，完成上传用户想要发布到其个人资料的照片。</p>
+<p>对于面向业务的操作，建议使用 <code>WorkManager</code>。</p>
+<h2 id=公开错误>公开错误</h2>
+<p>与存储库和数据源的互动可能会成功，也可能会在出现故障时抛出异常。对于协程和数据流，您应使用 Kotlin 的内置错误处理机制。对于可以由挂起函数触发的错误，可以在适当时使用 try/catch 块；在数据流中，可以使用 catch 运算符。如果使用这种方式，界面层应负责处理在调用数据层时出现的异常。</p>
+<p>数据层可以理解和处理不同类型的错误，并可以使用自定义异常（例如 <code>UserNotAuthenticatedException</code>）公开这些错误。</p>
+<blockquote>
+<p>注意：若要为与数据层的互动结果建模，另一种方法是使用 Result 类。此模式会为在处理结果时可能出现的错误和其他信号进行建模。在此模式中，数据层会返回 Result 类型，而非 T，以便让界面知道在特定情况下可能发生的已知错误。对于没有适当异常处理机制的反应式编程 API（例如 LiveData）来说，必须要使用这种方法。</p>
+</blockquote>
+<h2 id=常见任务>常见任务</h2>
+<p>以下几个部分举例说明了如何使用和构建数据层来执行 Android 应用中常见的特定任务。这些示例基于本指南前面提到的典型“新闻”应用。</p>
+<h4 id=发出网络请求>发出网络请求</h4>
+<p>发出网络请求是 Android 应用可能执行的最常见任务之一。“新闻”应用需要向用户提供从网络获取的最新新闻。因此，该应用需要一个数据源类来管理网络操作：<code>NewsRemoteDataSource</code>。为了向该应用的其余部分公开信息，我们创建了一个用于处理新闻数据操作的新存储库：<code>NewsRepository</code>。</p>
+<p>该应用需要满足的要求是，当用户打开屏幕时，该应用一律需要更新最新新闻。因此，这是一项面向界面的操作。</p>
+<h4 id=创建数据源>创建数据源</h4>
+<p>数据源需要公开一个用于返回最新新闻（<code>ArticleHeadline</code> 实例的列表）的函数。数据源需要提供一种具有主线程安全性的方式，以便从网络获取最新新闻。为此，它需要依赖于 <code>CoroutineDispatcher</code> 或 <code>Executor</code> 来运行任务。</p>
+<p>发出网络请求是由新的 <code>fetchLatestNews()</code> 方法处理的一次性调用：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsRemoteDataSource</span>(
+  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> newsApi: NewsApi,
+  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> ioDispatcher: CoroutineDispatcher
+) {
+    <span style=color:#75715e>/**
+</span><span style=color:#75715e>     * Fetches the latest news from the network and returns the result.
+</span><span style=color:#75715e>     * This executes on an IO-optimized thread pool, the function is main-safe.
+</span><span style=color:#75715e>     */</span>
+    <span style=color:#66d9ef>suspend</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>fetchLatestNews</span>(): List&lt;ArticleHeadline&gt; =
+        <span style=color:#75715e>// Move the execution to an IO-optimized thread since the ApiService
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// doesn&#39;t support coroutines and makes synchronous requests.
+</span><span style=color:#75715e></span>        withContext(ioDispatcher) {
+            newsApi.fetchLatestNews()
+        }
+    }
+}
+
+<span style=color:#75715e>// Makes news-related network synchronous requests.
+</span><span style=color:#75715e></span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>NewsApi</span> {
+    <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>fetchLatestNews</span>(): List&lt;ArticleHeadline&gt;
+}
+</code></pre></div><p><code>NewsApi</code> 接口会隐藏网络 API 客户端的实现；接口是由 <code>Retrofit</code> 还是由 <code>HttpURLConnection</code> 提供支持，并没有区别。依赖于接口能够使 API 实现在应用中可交换。</p>
+<blockquote>
+<p>要点：依赖于接口能够使 API 实现在应用中可交换。除了提供可扩缩性并可让您更轻松地替换依赖项之外，这还有利于进行测试，因为您可以在测试时注入虚构的数据源实现。</p>
+</blockquote>
+<h4 id=创建存储库>创建存储库</h4>
+<p>存储库类中不需要任何额外的逻辑，即可执行此任务，因此 <code>NewsRepository</code> 可充当网络数据源的代理。内存中缓存部分介绍了添加这一额外抽象层的好处。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#75715e>// NewsRepository is consumed from other layers of the hierarchy.
+</span><span style=color:#75715e></span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsRepository</span>(
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> newsRemoteDataSource: NewsRemoteDataSource
+) {
+    <span style=color:#66d9ef>suspend</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>fetchLatestNews</span>(): List&lt;ArticleHeadline&gt; =
+        newsRemoteDataSource.fetchLatestNews()
+}
+</code></pre></div><h4 id=实现内存中数据缓存>实现内存中数据缓存</h4>
+<p>假设为“新闻”应用引入了一项新的要求：当用户打开屏幕时，如果用户之前已发出请求，那么该应用必须向用户显示缓存的新闻。否则，该应用应发出网络请求以获取最新新闻。</p>
+<p>鉴于这项新的要求，当用户已打开该应用时，该应用必须在内存中保留最新新闻。因此，这是一项面向应用的操作。</p>
+<h4 id=缓存>缓存</h4>
+<p>通过添加内存中数据缓存，您可以在用户位于您的应用中时保留数据。缓存旨在使一些信息在内存中保存特定的时间长度，在此示例中，只要用户位于该应用中，就一直保存相应信息。缓存实现可以采用不同的形式。从简单的可变变量，到更为复杂、可以防止在多个线程上进行读/写操作的类，不一而足。可以在存储库中实现缓存，也可以在数据源类中实现缓存，具体取决于用例。</p>
+<h4 id=缓存网络请求结果>缓存网络请求结果</h4>
+<p>为了简单起见，<code>NewsRepository</code> 使用可变变量来缓存最新新闻。为了保护来自不同线程的读取和写入操作，我们使用了 <code>Mutex</code>。
+以下实现会将最新新闻信息缓存到存储库中的一个变量，该变量由 <code>Mutex</code> 提供写保护。如果网络请求结果是成功，数据将分配给 <code>latestNews</code> 变量。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsRepository</span>(
+  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> newsRemoteDataSource: NewsRemoteDataSource
+) {
+    <span style=color:#75715e>// Mutex to make writes to cached values thread-safe.
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> latestNewsMutex = Mutex()
+
+    <span style=color:#75715e>// Cache of the latest news got from the network.
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> latestNews: List&lt;ArticleHeadline&gt; = emptyList()
+
+    <span style=color:#66d9ef>suspend</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>getLatestNews</span>(refresh: Boolean = <span style=color:#66d9ef>false</span>): List&lt;ArticleHeadline&gt; {
+        <span style=color:#66d9ef>if</span> (refresh <span style=color:#f92672>||</span> latestNews.isEmpty()) {
+            <span style=color:#66d9ef>val</span> networkResult = newsRemoteDataSource.fetchLatestNews()
+            <span style=color:#75715e>// Thread-safe write to latestNews
+</span><span style=color:#75715e></span>            latestNewsMutex.withLock {
+                <span style=color:#66d9ef>this</span>.latestNews = networkResult
+            }
+        }
+
+        <span style=color:#66d9ef>return</span> latestNewsMutex.withLock { <span style=color:#66d9ef>this</span>.latestNews }
+    }
+}
+</code></pre></div><p>让操作拥有比屏幕更长的生命周期
+如果用户在网络请求正在进行时离开屏幕，系统将取消该请求，并且不会缓存结果。<code>NewsRepository</code> 不应使用调用方的 <code>CoroutineScope</code> 来执行此逻辑。<code>NewsRepository</code> 应使用附加到其生命周期的 <code>CoroutineScope</code>。获取最新新闻必须是面向应用的操作。</p>
+<p>为了遵循依赖项注入方面的最佳实践，<code>NewsRepository</code> 应在其构造函数中接收一个作用域作为参数，而不是创建自己的 <code>CoroutineScope</code>。由于存储库应在后台线程中执行大部分工作，因此您应使用 <code>Dispatchers.Default</code> 或您自己的线程池来配置 <code>CoroutineScope</code>。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsRepository</span>(
+    <span style=color:#f92672>..</span>.,
+    <span style=color:#75715e>// This could be CoroutineScope(SupervisorJob() + Dispatchers.Default).
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> externalScope: CoroutineScope
+) { <span style=color:#f92672>..</span>. }
+</code></pre></div><p>由于 <code>NewsRepository</code> 已准备好使用外部 <code>CoroutineScope</code> 来执行面向应用的操作，因此它必须调用数据源，并使用由相应作用域启动的新协程来保存其结果：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsRepository</span>(
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> newsRemoteDataSource: NewsRemoteDataSource,
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> externalScope: CoroutineScope
+) {
+    <span style=color:#75715e>/* ... */</span>
+
+    <span style=color:#66d9ef>suspend</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>getLatestNews</span>(refresh: Boolean = <span style=color:#66d9ef>false</span>): List&lt;ArticleHeadline&gt; {
+        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>if</span> (refresh) {
+            externalScope.async {
+                newsRemoteDataSource.fetchLatestNews().also { networkResult <span style=color:#f92672>-&gt;</span>
+                    <span style=color:#75715e>// Thread-safe write to latestNews.
+</span><span style=color:#75715e></span>                    latestNewsMutex.withLock {
+                        latestNews = networkResult
+                    }
+                }
+            }.await()
+        } <span style=color:#66d9ef>else</span> {
+            <span style=color:#66d9ef>return</span> latestNewsMutex.withLock { <span style=color:#66d9ef>this</span>.latestNews }
+        }
+    }
+}
+</code></pre></div><p><code>async</code> 用于在外部作用域内启动协程。<code>await</code> 在新的协程上调用，以便在网络请求返回结果并且结果保存到缓存中之前，一直保持挂起状态。如果届时用户仍位于屏幕上，就会看到最新新闻；如果用户已离开屏幕，<code>await</code> 将被取消，但 <code>async</code> 内部的逻辑将继续执行。</p>
+<h4 id=将数据保存到磁盘以及从磁盘检索数据>将数据保存到磁盘以及从磁盘检索数据</h4>
+<p>假设您要保存一些数据，例如添加了书签的新闻和用户偏好设置。这种类型的数据需要在进程终止后继续保留，并且即使用户未连接到网络，也必须可供用户访问。</p>
+<p>如果您处理的数据需要在进程终止后继续保留，则您需要通过以下方式之一将其存储在磁盘上：</p>
+<ul>
+<li>对于需要查询、需要实现引用完整性或需要部分更新的大型数据集，请将数据保存在 <code>Room</code> 数据库中。在“新闻”应用示例中，新闻报道或作者信息可以保存在该数据库中。</li>
+<li>对于只需要检索和设置（不需要查询，也不需要部分更新）的小型数据集，请使用 <code>DataStore</code>。在“新闻”应用示例中，用户的首选日期格式或其他显示偏好设置可以保存在 <code>DataStore</code> 中。</li>
+<li>对于数据块（例如 JSON 对象），可以使用文件。</li>
+</ul>
+<p>如可信来源部分所述，每个数据源都只能处理一个来源，并且与特定的数据类型（例如 <code>News</code>、<code>Authors</code>、<code>NewsAndAuthors</code> 或 <code>UserPreferences</code>）相对应。使用数据源的类应该不知道数据是如何保存的，例如是保存在数据库中，还是保存在文件中。</p>
+<h4 id=使用-room-作为数据源>使用 Room 作为数据源</h4>
+<p>由于每个数据源都应只负责处理一种特定类型的数据的一个数据源，因此 <code>Room</code> 数据源会接收数据访问对象 (DAO) 或数据库本身作为参数。例如，<code>NewsLocalDataSource</code> 可以接收 <code>NewsDao</code> 的实例作为参数，<code>AuthorsLocalDataSource</code> 则可以接收 <code>AuthorsDao</code> 的实例。</p>
+<p>在某些情况下，如果不需要额外的逻辑，您可以直接将 DAO 注入存储库，因为 DAO 是一种可以在测试中轻松替换的接口。</p>
+<h4 id=使用-datastore-作为数据源>使用 DataStore 作为数据源</h4>
+<p><code>DataStore</code> 非常适合存储键值对，例如用户设置，具体示例可能包括时间格式、通知偏好设置，以及是显示还是隐藏用户已阅读的新闻报道。<code>DataStore</code> 还可以使用协议缓冲区来存储类型化对象。</p>
+<p>与任何其他对象一样，由 <code>DataStore</code> 提供支持的数据源应包含与特定类型相对应或与应用的特定部分相对应的数据。对于 <code>DataStore</code> 来说更是如此，因为 <code>DataStore</code> 读取操作会作为一个每次值更新后都会发出的数据流进行公开。因此，您应将相关偏好设置存储在同一个 <code>DataStore</code> 中。</p>
+<p>例如，您可以创建一个仅处理通知相关偏好设置的 <code>NotificationsDataStore</code>，并创建一个仅处理新闻屏幕相关偏好设置的 <code>NewsPreferencesDataStore</code>。这样，您就可以更好地限定更新作用域，因为只有当与相应屏幕相关的偏好设置发生变化时，<code>newsScreenPreferencesDataStore.data</code> 流才会发出。这也意味着，该对象的生命周期可以更短，因为它只能在新闻屏幕显示时存在。</p>
+<h4 id=使用文件作为数据源>使用文件作为数据源</h4>
+<p>处理大型对象（例如 JSON 对象或位图）时，您需要使用 <code>File</code> 对象并处理线程切换。</p>
+<h4 id=使用-workmanager-调度任务>使用 WorkManager 调度任务</h4>
+<p>假设为“新闻”应用引入了一项新的要求：只要设备正在充电并且已连接到不按流量计费的网络，该应用就必须为用户提供用于选择定期自动获取最新新闻的选项。这会使此操作成为一项面向业务的操作。如果该应用实现了这一要求，那么在用户打开该应用时，即使设备没有连接到网络，用户仍然可以看到最近的新闻。</p>
+<p>借助 <code>WorkManager</code>，可以轻松调度异步的可靠工作，并可以负责管理约束条件。我们建议使用该库执行持久性工作。为了执行上面定义的任务，我们创建了一个 <code>Worker</code> 类：<code>FetchLatestNewsWorker</code>。此类以 <code>NewsRepository</code> 作为依赖项，以便获取最新新闻并将其缓存到磁盘中。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>RefreshLatestNewsWorker</span>(
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> newsRepository: NewsRepository,
+    context: Context,
+    params: WorkerParameters
+) : CoroutineWorker(context, params) {
+
+    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>suspend</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>doWork</span>(): Result = <span style=color:#66d9ef>try</span> {
+        newsRepository.refreshLatestNews()
+        Result.success()
+    } <span style=color:#66d9ef>catch</span> (error: Throwable) {
+        Result.failure()
+    }
+}
+</code></pre></div><p>此类任务的业务逻辑应封装在其自己的类中，并且应被视为单独的数据源。这样一来，<code>WorkManager</code> 将仅负责确保工作会在所有约束条件都得到满足时在后台线程中执行。通过遵循此模式，您可以根据需要在不同环境中快速交换实现。</p>
+<p>在此示例中，必须从 <code>NewsRepository</code> 调用这个与新闻相关的任务，前者会将一个新的数据源作为依赖项：<code>NewsTasksDataSource</code>。实现方式如下：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>val</span> REFRESH_RATE_HOURS = <span style=color:#ae81ff>4L</span>
+<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>val</span> FETCH_LATEST_NEWS_TASK = <span style=color:#e6db74>&#34;FetchLatestNewsTask&#34;</span>
+<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>val</span> TAG_FETCH_LATEST_NEWS = <span style=color:#e6db74>&#34;FetchLatestNewsTaskTag&#34;</span>
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>NewsTasksDataSource</span>(
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> workManager: WorkManager
+) {
+    <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>fetchNewsPeriodically</span>() {
+        <span style=color:#66d9ef>val</span> fetchNewsRequest = PeriodicWorkRequestBuilder&lt;RefreshLatestNewsWorker&gt;(
+            REFRESH_RATE_HOURS, TimeUnit.HOURS
+        ).setConstraints(
+            Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.TEMPORARILY_UNMETERED)
+                .setRequiresCharging(<span style=color:#66d9ef>true</span>)
+                .build()
+        )
+            .addTag(TAG_FETCH_LATEST_NEWS)
+
+        workManager.enqueueUniquePeriodicWork(
+            FETCH_LATEST_NEWS_TASK,
+            ExistingPeriodicWorkPolicy.KEEP,
+            fetchNewsRequest.build()
+        )
+    }
+
+    <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>cancelFetchingNewsPeriodically</span>() {
+        workManager.cancelAllWorkByTag(TAG_FETCH_LATEST_NEWS)
+    }
+}
+</code></pre></div><p>这些类型的类以其负责的数据命名，例如 <code>NewsTasksDataSource</code> 或 <code>PaymentsTasksDataSource</code>。与特定类型的数据相关的所有任务都应封装在同一个类中。</p>
+<p>如果任务需要在应用启动时触发，建议使用从 Initializer 调用存储库的 App Startup 库触发 <code>WorkManager</code> 请求。</p>
+<blockquote>
+<p>原文链接：<a href=https://developer.android.google.cn/jetpack/guide/data-layer>https://developer.android.google.cn/jetpack/guide/data-layer</a></p>
+</blockquote></article>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>window.onload=function(){const a=document.getElementById('post-header'),b=a.offsetHeight;document.documentElement.style.scrollPaddingTop=b+10+"px"};const tocToggleButton=document.getElementById("toc-toggle"),tippyInstance=tippy('#toc-toggle',{trigger:'click',content:'<div id="table-of-contents">\u003cnav id=\u0022TableOfContents\u0022\u003e\n  \u003cul\u003e\n    \u003cli\u003e\u003ca href=\u0022#数据层架构\u0022\u003e数据层架构\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#公开-api\u0022\u003e公开 API\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#本指南中的命名惯例\u0022\u003e本指南中的命名惯例\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#多层存储库\u0022\u003e多层存储库\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#可信来源\u0022\u003e可信来源\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#线程处理\u0022\u003e线程处理\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#生命周期\u0022\u003e生命周期\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#表示业务模式\u0022\u003e表示业务模式\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#数据操作类型\u0022\u003e数据操作类型\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#公开错误\u0022\u003e公开错误\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#常见任务\u0022\u003e常见任务\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n  \u003c/ul\u003e\n\u003c/nav\u003e</div>',allowHTML:!0,placement:'bottom-start',interactive:!0,arrow:!1,maxWidth:"none",onHide:function(){tocToggleButton.classList.remove("hover")},onShow:function(){tocToggleButton.classList.add("hover")},onShown:function(){if(selectTableOfContentsOption(),window.hasSetupTableOfContentsListeners)return;const a=document.getElementById("table-of-contents");a.addEventListener('click',function(){tippyInstance[0].hide()}),window.hasSetupTableOfContentsListeners=!0}});function selectTableOfContentsOption(){const a='table-of-contents-option-selected',b=document.querySelectorAll("#table-of-contents > nav > ul li");for(const d of b){const[c]=d.children;if(c.tagName.toLowerCase()!=='a')continue;window.location.href===c.href?c.classList.add(a):c.classList.remove(a)}}window.onhashchange=selectTableOfContentsOption</script>
+<div class="footer container-xl width-full p-responsive">
+<div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light">
+<a aria-label=Homepage title=GitHub class="footer-octicon d-none d-lg-block mr-lg-4" href=https://chenjiuling.github.io/><svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+<ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+<li class="mr-3 mr-lg-0">Theme by <a href=https://github.com/MeiK2333/github-style>github-style</a></li>
+</ul>
+</div>
+<div class="d-flex flex-justify-center pb-6">
+<span class="f6 text-gray-light"></span>
+</div>
+</div>
+</body>
+<script type=application/javascript src=https://chenjiuling.github.io/js/github-style.js></script>
+</html>
