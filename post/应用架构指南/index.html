@@ -1,0 +1,241 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width">
+<script type=application/javascript src=https://chenjiuling.github.io/js/theme-mode.js></script>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/frameworks.min.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/github.min.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/github-style.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/light.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/dark.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/syntax.css>
+<title>应用架构指南 - chenjiuling - 在阅读中遇见自己</title>
+<link rel=icon type=image/x-icon href=/images/github.png>
+<meta name=theme-color content="#1e2327">
+<meta name=description content="常见的架构原则 如果您不应使用应用组件存储应用数据和状态，那么您应该改为如何设计应用呢？
+随着 Android 应用大小不断增加，您定义的架构务必要能允许应用扩缩、提升应用的稳健性并且方便对应用进行测试。
+应用架构定义了应用的各个部分之间的界限以及每个部分应承担的职责。为了满足上述需求，您应该按照某些特定原则设计应用架构。
+分离关注点 要遵循的最重要的原则是分离关注点。 一种常见的错误是在一个 Activity 或 Fragment 中编写所有代码。这些基于界面的类应仅包含处理界面和操作系统交互的逻辑。您应使这些类尽可能保持精简，这样可以避免许多与组件生命周期相关的问题，并提高这些类的可测试性。
+">
+<meta name=keywords content="blog,android">
+<meta name=robots content="noodp">
+<link rel=canonical href=https://chenjiuling.github.io/post/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E6%8C%87%E5%8D%97/>
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="应用架构指南 - chenjiuling - 在阅读中遇见自己">
+<meta name=twitter:description content="常见的架构原则 如果您不应使用应用组件存储应用数据和状态，那么您应该改为如何设计应用呢？
+随着 Android 应用大小不断增加，您定义的架构务必要能允许应用扩缩、提升应用的稳健性并且方便对应用进行测试。
+应用架构定义了应用的各个部分之间的界限以及每个部分应承担的职责。为了满足上述需求，您应该按照某些特定原则设计应用架构。
+分离关注点 要遵循的最重要的原则是分离关注点。 一种常见的错误是在一个 Activity 或 Fragment 中编写所有代码。这些基于界面的类应仅包含处理界面和操作系统交互的逻辑。您应使这些类尽可能保持精简，这样可以避免许多与组件生命周期相关的问题，并提高这些类的可测试性。
+">
+<meta name=twitter:site content="https://chenjiuling.github.io/">
+<meta name=twitter:creator content>
+<meta name=twitter:image content="https://chenjiuling.github.io/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="应用架构指南 - chenjiuling - 在阅读中遇见自己">
+<meta property="og:description" content="常见的架构原则 如果您不应使用应用组件存储应用数据和状态，那么您应该改为如何设计应用呢？
+随着 Android 应用大小不断增加，您定义的架构务必要能允许应用扩缩、提升应用的稳健性并且方便对应用进行测试。
+应用架构定义了应用的各个部分之间的界限以及每个部分应承担的职责。为了满足上述需求，您应该按照某些特定原则设计应用架构。
+分离关注点 要遵循的最重要的原则是分离关注点。 一种常见的错误是在一个 Activity 或 Fragment 中编写所有代码。这些基于界面的类应仅包含处理界面和操作系统交互的逻辑。您应使这些类尽可能保持精简，这样可以避免许多与组件生命周期相关的问题，并提高这些类的可测试性。
+">
+<meta property="og:url" content="https://chenjiuling.github.io/post/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E6%8C%87%E5%8D%97/">
+<meta property="og:site_name" content="应用架构指南">
+<meta property="og:image" content="https://chenjiuling.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+</head>
+<body>
+<div style=position:relative>
+<header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+<div class="Header-item mobile-none" style=margin-top:-4px;margin-bottom:-4px>
+<a class=Header-link href=https://chenjiuling.github.io/><svg class="octicon" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+</div>
+<div class="Header-item d-md-none">
+<button class="Header-link btn-link js-details-target" type=button onclick="document.querySelector('#header-search').style.display=document.querySelector('#header-search').style.display=='none'?'block':'none'"><svg height="24" class="octicon octicon-three-bars" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M1 2.75A.75.75.0 011.75 2h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 2.75zm0 5A.75.75.0 011.75 7h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 7.75zM1.75 12a.75.75.0 100 1.5h12.5a.75.75.0 100-1.5H1.75z"/></svg>
+</button>
+</div>
+<div style=display:none id=header-search class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+<div class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+<div class=position-relative>
+<form target=_blank action=https://www.google.com/search accept-charset=utf-8 method=get autocomplete=off>
+<label class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+<input type=text class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable" name=q placeholder=Search autocomplete=off>
+<input type=hidden name=q value=site:https://chenjiuling.github.io/>
+</label>
+</form>
+</div>
+</div>
+</div>
+<div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+<a class=Header-link href=https://chenjiuling.github.io/><svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+</div>
+<div class=Header-item style=margin-right:0>
+<a href=javascript:void(0) class="Header-link no-select" onclick=switchTheme()><svg style="fill:var(--color-profile-color-modes-toggle-moon)" class="no-select" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.52208 7.71754c3.05612.0 5.53362-2.47748 5.53362-5.5336C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961 9.95801 1.07727 10.3495.771159 10.6474.99992c1.4679 1.12724 2.4141 2.90007 2.4141 4.89391.0 3.40575-2.7609 6.16667-6.16665 6.16667-2.94151.0-5.40199-2.0595-6.018122-4.81523C.794841 6.87902 1.23668 6.65289 1.55321 6.85451 2.41106 7.40095 3.4296 7.71754 4.52208 7.71754z"/></svg>
+</a>
+</div>
+</header>
+</div>
+<script src=https://unpkg.com/@popperjs/core@2></script>
+<script src=https://unpkg.com/tippy.js@6></script>
+<div>
+<main>
+<div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+<div class=px-0>
+<div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+<div class="flex-auto min-width-0 width-fit mr-3">
+<div class=d-flex>
+<div class="d-none d-md-block">
+<a class="avatar mr-2 flex-shrink-0" href=https://chenjiuling.github.io/>
+<img class=avatar-user src=https://chenjiuling.github.io/images/avatar.png width=32 height=32></a>
+</div>
+<div class="d-flex flex-column">
+<h1 class="break-word f3 text-normal mb-md-0 mb-1">
+<span class=author>
+<a href=https://chenjiuling.github.io/>chenjiuling</a></span><span class=path-divider>/</span><strong class="css-truncate-target mr-1" style=max-width:410px><a href=https://chenjiuling.github.io/post/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E6%8C%87%E5%8D%97/>应用架构指南</a></strong>
+</h1>
+<div class="note m-0">
+Created <relative-time datetime="Mon, 01 Jan 0001 00:00:00 +0000" class=no-wrap>
+Mon, 01 Jan 0001 00:00:00 +0000</relative-time>
+<span class=file-info-divider></span>
+Modified <relative-time datetime="Mon, 10 Jan 2022 03:33:53 +0000" class=no-wrap>
+Mon, 10 Jan 2022 03:33:53 +0000</relative-time>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-lg px-3 new-discussion-timeline">
+<div class="repository-content gist-content">
+<div>
+<div class="js-gist-file-update-container js-task-list-container file-box">
+<div id=file-pytest class="file my-2">
+<div id=post-header class="file-header d-flex flex-md-items-center flex-items-start sticky-header">
+<div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+<div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+<summary id=toc-toggle class="btn btn-octicon m-0 mr-2 p-2" aria-haspopup=menu aria-label="Table of Contents" role=button><svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered"><path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zM3 8A1 1 0 111 8a1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+</summary>
+2727 Words
+</div>
+<div class="file-actions flex-order-2 pt-0">
+</div>
+</div>
+</div>
+<div class="Box-body px-5 pb-5">
+<article class="markdown-body entry-content container-lg"><h2 id=常见的架构原则>常见的架构原则</h2>
+<p>如果您不应使用应用组件存储应用数据和状态，那么您应该改为如何设计应用呢？</p>
+<p>随着 Android 应用大小不断增加，您定义的架构务必要能允许应用扩缩、提升应用的稳健性并且方便对应用进行测试。</p>
+<p>应用架构定义了应用的各个部分之间的界限以及每个部分应承担的职责。为了满足上述需求，您应该按照某些特定原则设计应用架构。</p>
+<h4 id=分离关注点>分离关注点</h4>
+<p>要遵循的最重要的原则是分离关注点。 一种常见的错误是在一个 <code>Activity</code> 或 <code>Fragment</code> 中编写所有代码。这些基于界面的类应仅包含处理界面和操作系统交互的逻辑。您应使这些类尽可能保持精简，这样可以避免许多与组件生命周期相关的问题，并提高这些类的可测试性。</p>
+<p>请注意，您并非拥有 <code>Activity</code> 和 <code>Fragment</code> 的实现；它们只是表示 Android 操作系统与应用之间关系的粘合类。操作系统可能会根据用户互动或因内存不足等系统条件随时销毁它们。为了提供令人满意的用户体验和更易于管理的应用维护体验，最好尽量减少对它们的依赖。</p>
+<h4 id=通过数据模型驱动界面>通过数据模型驱动界面</h4>
+<p>另一个重要原则是您应该通过数据模型驱动界面（最好是持久性模型）。数据模型代表应用的数据。它们独立于应用中的界面元素和其他组件。这意味着它们与界面和应用组件的生命周期没有关联，但仍会在操作系统决定从内存中移除应用的进程时被销毁。</p>
+<p>持久性模型是理想之选，原因如下：</p>
+<ul>
+<li>
+<p>如果 Android 操作系统销毁应用以释放资源，用户不会丢失数据。</p>
+</li>
+<li>
+<p>当网络连接不稳定或不可用时，应用会继续工作。</p>
+</li>
+</ul>
+<p>如果您的应用机构以数据模型类为基础，您的应用会更便于测试、更稳定可靠。</p>
+<h2 id=推荐的应用架构>推荐的应用架构</h2>
+<blockquote>
+<p>注意：本页中提供的建议和最佳实践可应用于广泛的应用。遵循这些建议和最佳实践可以提升应用的可扩缩性、质量和稳健性，并可使应用更易于测试。不过，您应该将这些提示视为指南，并视需要进行调整来满足您的要求。</p>
+</blockquote>
+<p>基于上一部分提到的常见架构原则，每个应用应至少有两个层：</p>
+<ul>
+<li>界面层 - 在屏幕上显示应用数据。</li>
+<li>数据层 - 包含应用的业务逻辑并公开应用数据。</li>
+</ul>
+<p>您可以额外添加一个名为“网域层”的架构层，以简化和重复使用界面层与数据层之间的交互。
+<img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-overview.png alt=典型应用架构的示意图>
+图 1. 典型应用架构的示意图。</p>
+<blockquote>
+<p>注意：本指南中示意图中的箭头表示各个类之间的依赖关系。例如，网域层依赖于数据层类。</p>
+</blockquote>
+<h4 id=界面层>界面层</h4>
+<p>界面层（或呈现层）的作用是在屏幕上显示应用数据。无论是因为用户互动（例如按下按钮）还是外部输入（例如网络响应）导致数据发生变化时，界面都应更新以反映相应的变化。</p>
+<p>界面层由以下两部分组成：</p>
+<ul>
+<li>在屏幕上呈现数据的界面元素。您可以使用 <code>View</code> 或 <code>Jetpack Compose</code> 函数构建这些元素。</li>
+<li>用于存储数据、向界面提供数据以及处理逻辑的状态容器（如 <code>ViewModel</code> 类）。</li>
+</ul>
+<p><img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-overview-ui.png alt=界面层在应用架构中的作用>
+图 2.界面层在应用架构中的作用。</p>
+<h4 id=数据层>数据层</h4>
+<p>应用的数据层包含业务逻辑。业务逻辑决定应用的价值，它包含决定应用如何创建、存储和更改数据的规则。</p>
+<p>数据层由多个代码库组成，其中每个代码库可包含零到多个数据源。您应该为应用处理的每种不同类型的数据创建一个代码库类。例如，您可以为与电影相关的数据创建 <code>MoviesRepository</code> 类，或者为与付款相关的数据创建 <code>PaymentsRepository</code> 类。
+<img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-overview-data.png alt=数据层在应用架构中的作用>
+图 3. 数据层在应用架构中的作用。</p>
+<p>代码库类负责以下任务：</p>
+<ul>
+<li>向应用的其余部分提供数据。</li>
+<li>对数据进行集中更改。</li>
+<li>解决多个数据源之间的冲突。</li>
+<li>从应用的其余部分中提取数据源。</li>
+<li>包含业务逻辑。</li>
+</ul>
+<p>每个数据源类应仅负责处理一个数据源，该数据源可以是文件、网络来源或本地数据库。数据源类是应用与数据操作系统之间的桥梁。</p>
+<h4 id=网域层>网域层</h4>
+<p>网域层是位于界面与数据层之间的可选层。</p>
+<p>网域层负责封装复杂的业务逻辑，或者由多个 <code>ViewModel</code> 重复使用的简单业务逻辑。此层是可选的，因为并非所有应用都有这类需求。请仅在需要时使用该层，例如处理复杂逻辑或支持可重用性。
+<img src=https://developer.android.google.cn/topic/libraries/architecture/images/mad-arch-overview-domain.png alt=网域层在应用架构中的作用>
+图 4.网域层在应用架构中的作用。</p>
+<p>该层中的类通常称为用例或交互方。每个用例都应仅负责单个功能。例如，如果多个 <code>ViewModel</code> 依赖时区在屏幕上显示适当的消息，则您的应用可能具有 <code>GetTimeZoneUseCase</code> 类。</p>
+<h2 id=管理组件之间的依赖关系>管理组件之间的依赖关系</h2>
+<p>应用中的类要依赖其他类才能正常工作。您可以使用以下任一设计模式来收集特定类的依赖项：</p>
+<ul>
+<li><strong>依赖注入 (DI)</strong>：依赖注入使类能够定义其依赖项而不构造它们。在运行时，另一个类负责提供这些依赖项。</li>
+<li><strong>服务定位器</strong>：服务定位器模式提供了一个注册表，类可以从中获取其依赖项而不构造它们。</li>
+</ul>
+<p>您可以借助这些模式来扩展代码，因为它们可提供清晰的依赖项管理模式（无需复制代码，也不会增添复杂性）。 此外，您还可以借助这些模式在测试和生产实现之间快速切换。</p>
+<p>我们建议在 Android 应用中采用依赖项注入模式并使用 <strong>Hilt库</strong>。Hilt 通过遍历依赖项树自动构造对象，为依赖项提供编译时保证，并为 Android 框架类创建依赖项容器。</p>
+<h2 id=常见的最佳做法>常见的最佳做法</h2>
+<p>编程是一个创造性的领域，构建 Android 应用也不例外。 无论是在多个 <code>Activity</code> 或 <code>Fragment</code> 之间传递数据，检索远程数据并将其保留在本地以在离线模式下使用，还是复杂应用遇到的任何其他常见情况，解决问题的方法都会有很多种。</p>
+<p>虽然以下建议不是强制性的，但在大多数情况下，遵循这些建议会使您的代码库更强大、可测试性更高且更易维护：</p>
+<p><strong>不要将数据存储在应用组件中。</strong></p>
+<p>请避免将应用的入口点（如 Activity、Service 和广播接收器）指定为数据源。相反，您应只将其与其他组件协调，以检索与该入口点相关的数据子集。每个应用组件存在的时间都很短暂，具体取决于用户与其设备的交互情况以及系统当前的整体运行状况。</p>
+<p><strong>减少对 Android 类的依赖。</strong></p>
+<p>您的应用组件应该是唯一依赖于 Android 框架 SDK API （例如 <code>Context</code> 或 <code>Toast</code>）的类。将应用中的其他类与这些类分离开来有助于改善可测试性，并减少应用中的耦合。</p>
+<p><strong>在应用的各个模块之间设定明确定义的职责界限。</strong></p>
+<p>例如，请勿在代码库中将从网络加载数据的代码散布到多个类或软件包中。同样，也不要将不相关的职责（如数据缓存和数据绑定）定义到同一个类中。遵循推荐的应用架构可以帮助您解决此问题。</p>
+<p><strong>尽量少公开每个模块中的代码。</strong></p>
+<p>例如，请勿试图创建从模块提供内部实现细节的快捷方式。短期内，您可能会省点时间，但随着代码库的不断发展，您可能会反复陷入技术上的麻烦。</p>
+<p><strong>专注于应用的独特核心，以使其从其他应用中脱颖而出。</strong></p>
+<p>不要一次又一次地编写相同的样板代码，这是在做无用功。 相反，您应将时间和精力集中放在能让应用与众不同的方面上，并让 Jetpack 库以及建议的其他库处理重复的样板。</p>
+<p><strong>考虑如何使应用的每个部分可独立测试。</strong></p>
+<p>例如，如果使用明确定义的 API 从网络获取数据，将会更容易测试在本地数据库中保留该数据的模块。如果您将这两个模块的逻辑混放在一处，或将网络代码分散在整个代码库中，那么即便能够进行有效测试，难度也会大很多。</p>
+<p><strong>保留尽可能多的相关数据和最新数据。</strong></p>
+<p>这样，即使用户的设备处于离线模式，他们也可以使用您应用的功能。请记住，并非所有用户都能享受到稳定的高速连接 - 即使有时可以使用，在比较拥挤的地方网络信号也可能不佳。</p>
+<blockquote>
+<p>原文链接：https://developer.android.google.cn/jetpack/guide</p>
+</blockquote></article>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>window.onload=function(){const a=document.getElementById('post-header'),b=a.offsetHeight;document.documentElement.style.scrollPaddingTop=b+10+"px"};const tocToggleButton=document.getElementById("toc-toggle"),tippyInstance=tippy('#toc-toggle',{trigger:'click',content:'<div id="table-of-contents">\u003cnav id=\u0022TableOfContents\u0022\u003e\n  \u003cul\u003e\n    \u003cli\u003e\u003ca href=\u0022#常见的架构原则\u0022\u003e常见的架构原则\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#推荐的应用架构\u0022\u003e推荐的应用架构\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#管理组件之间的依赖关系\u0022\u003e管理组件之间的依赖关系\u003c/a\u003e\u003c/li\u003e\n    \u003cli\u003e\u003ca href=\u0022#常见的最佳做法\u0022\u003e常见的最佳做法\u003c/a\u003e\u003c/li\u003e\n  \u003c/ul\u003e\n\u003c/nav\u003e</div>',allowHTML:!0,placement:'bottom-start',interactive:!0,arrow:!1,maxWidth:"none",onHide:function(){tocToggleButton.classList.remove("hover")},onShow:function(){tocToggleButton.classList.add("hover")},onShown:function(){if(selectTableOfContentsOption(),window.hasSetupTableOfContentsListeners)return;const a=document.getElementById("table-of-contents");a.addEventListener('click',function(){tippyInstance[0].hide()}),window.hasSetupTableOfContentsListeners=!0}});function selectTableOfContentsOption(){const a='table-of-contents-option-selected',b=document.querySelectorAll("#table-of-contents > nav > ul li");for(const d of b){const[c]=d.children;if(c.tagName.toLowerCase()!=='a')continue;window.location.href===c.href?c.classList.add(a):c.classList.remove(a)}}window.onhashchange=selectTableOfContentsOption</script>
+<div class="footer container-xl width-full p-responsive">
+<div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light">
+<a aria-label=Homepage title=GitHub class="footer-octicon d-none d-lg-block mr-lg-4" href=https://chenjiuling.github.io/><svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+<ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+<li class="mr-3 mr-lg-0">Theme by <a href=https://github.com/MeiK2333/github-style>github-style</a></li>
+</ul>
+</div>
+<div class="d-flex flex-justify-center pb-6">
+<span class="f6 text-gray-light"></span>
+</div>
+</div>
+</body>
+<script type=application/javascript src=https://chenjiuling.github.io/js/github-style.js></script>
+</html>
