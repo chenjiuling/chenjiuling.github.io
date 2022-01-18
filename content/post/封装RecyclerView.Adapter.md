@@ -15,10 +15,19 @@ draft: false
 
 ```kotlin
 abstract class BaseRecyclerViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private val viewCaches = SparseArray<View>()
     abstract fun bind(data: T, payload: Any?)
     open fun onViewAttachedToWindow() {}
     open fun onViewDetachToWindow() {}
     open fun onViewRecycled() {}
+    fun <V : View> find(@IdRes id: Int): V {
+        if (viewCaches.containsKey(id)) {
+            return viewCaches[id] as V
+        }
+        val view = itemView.findViewById<V>(id)
+        viewCaches.put(id, view)
+        return view
+    }
 }
 ```
 
