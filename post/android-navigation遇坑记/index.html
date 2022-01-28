@@ -1,0 +1,474 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width">
+<script type=application/javascript src=https://chenjiuling.github.io/js/theme-mode.js></script>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/frameworks.min.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/github.min.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/github-style.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/light.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/dark.css>
+<link rel=stylesheet href=https://chenjiuling.github.io/css/syntax.css>
+<title>Android-Navigation遇坑记 - 在阅读中遇见自己</title>
+<link rel=icon type=image/x-icon href=/images/github.png>
+<meta name=theme-color content="#1e2327">
+<meta name=description content="Android Navigation 是 Google Jetpack 里面的一个组件，支持 Android 应用里面的页面导航。
+在使用过程中，我们感受到如下的优点。
+">
+<meta name=keywords content="blog,android">
+<meta name=robots content="noodp">
+<link rel=canonical href=https://chenjiuling.github.io/post/android-navigation%E9%81%87%E5%9D%91%E8%AE%B0/>
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Android-Navigation遇坑记 - 在阅读中遇见自己">
+<meta name=twitter:description content="Android Navigation 是 Google Jetpack 里面的一个组件，支持 Android 应用里面的页面导航。
+在使用过程中，我们感受到如下的优点。
+">
+<meta name=twitter:site content="https://chenjiuling.github.io/">
+<meta name=twitter:creator content>
+<meta name=twitter:image content="https://chenjiuling.github.io/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-Navigation遇坑记 - 在阅读中遇见自己">
+<meta property="og:description" content="Android Navigation 是 Google Jetpack 里面的一个组件，支持 Android 应用里面的页面导航。
+在使用过程中，我们感受到如下的优点。
+">
+<meta property="og:url" content="https://chenjiuling.github.io/post/android-navigation%E9%81%87%E5%9D%91%E8%AE%B0/">
+<meta property="og:site_name" content="Android-Navigation遇坑记">
+<meta property="og:image" content="https://chenjiuling.github.io/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:published_time" content="2022-01-20 14:11:54 +0800 +0800">
+</head>
+<body>
+<div style=position:relative>
+<header class="Header js-details-container Details px-3 px-md-4 px-lg-5 flex-wrap flex-md-nowrap open Details--on">
+<div class="Header-item mobile-none" style=margin-top:-4px;margin-bottom:-4px>
+<a class=Header-link href=https://chenjiuling.github.io/><svg class="octicon" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+</div>
+<div class="Header-item d-md-none">
+<button class="Header-link btn-link js-details-target" type=button onclick="document.querySelector('#header-search').style.display=document.querySelector('#header-search').style.display=='none'?'block':'none'"><svg height="24" class="octicon octicon-three-bars" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M1 2.75A.75.75.0 011.75 2h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 2.75zm0 5A.75.75.0 011.75 7h12.5a.75.75.0 110 1.5H1.75A.75.75.0 011 7.75zM1.75 12a.75.75.0 100 1.5h12.5a.75.75.0 100-1.5H1.75z"/></svg>
+</button>
+</div>
+<div style=display:none id=header-search class="Header-item Header-item--full flex-column flex-md-row width-full flex-order-2 flex-md-order-none mr-0 mr-md-3 mt-3 mt-md-0 Details-content--hidden-not-important d-md-flex">
+<div class="Header-search header-search flex-auto js-site-search position-relative flex-self-stretch flex-md-self-auto mb-3 mb-md-0 mr-0 mr-md-3 scoped-search site-scoped-search js-jump-to">
+<div class=position-relative>
+<form target=_blank action=https://www.google.com/search accept-charset=utf-8 method=get autocomplete=off>
+<label class="Header-search-label form-control input-sm header-search-wrapper p-0 js-chromeless-input-container header-search-wrapper-jump-to position-relative d-flex flex-justify-between flex-items-center">
+<input type=text class="Header-search-input form-control input-sm header-search-input jump-to-field js-jump-to-field js-site-search-focus js-site-search-field is-clearable" name=q placeholder=Search autocomplete=off>
+<input type=hidden name=q value=site:https://chenjiuling.github.io/>
+</label>
+</form>
+</div>
+</div>
+</div>
+<div class="Header-item Header-item--full flex-justify-center d-md-none position-relative">
+<a class=Header-link href=https://chenjiuling.github.io/><svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+</div>
+<div class=Header-item style=margin-right:0>
+<a href=javascript:void(0) class="Header-link no-select" onclick=switchTheme()><svg style="fill:var(--color-profile-color-modes-toggle-moon)" class="no-select" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.52208 7.71754c3.05612.0 5.53362-2.47748 5.53362-5.5336C10.0557 1.93498 10.0392 1.68986 10.0074 1.44961 9.95801 1.07727 10.3495.771159 10.6474.99992c1.4679 1.12724 2.4141 2.90007 2.4141 4.89391.0 3.40575-2.7609 6.16667-6.16665 6.16667-2.94151.0-5.40199-2.0595-6.018122-4.81523C.794841 6.87902 1.23668 6.65289 1.55321 6.85451 2.41106 7.40095 3.4296 7.71754 4.52208 7.71754z"/></svg>
+</a>
+</div>
+</header>
+</div>
+<script src=https://unpkg.com/@popperjs/core@2></script>
+<script src=https://unpkg.com/tippy.js@6></script>
+<div>
+<main>
+<div class="gisthead pagehead bg-gray-light pb-0 pt-3 mb-4">
+<div class=px-0>
+<div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
+<div class="flex-auto min-width-0 width-fit mr-3">
+<div class=d-flex>
+<div class="d-none d-md-block">
+<a class="avatar mr-2 flex-shrink-0" href=https://chenjiuling.github.io/>
+<img class=avatar-user src=https://chenjiuling.github.io/images/avatar.png width=32 height=32></a>
+</div>
+<div class="d-flex flex-column">
+<h1 class="break-word f3 text-normal mb-md-0 mb-1">
+<span class=author>
+<a href=https://chenjiuling.github.io/>chenjie</a></span><span class=path-divider>/</span><strong class="css-truncate-target mr-1" style=max-width:410px><a href=https://chenjiuling.github.io/post/android-navigation%E9%81%87%E5%9D%91%E8%AE%B0/>Android-Navigation遇坑记</a></strong>
+</h1>
+<div class="note m-0">
+Created <relative-time datetime="Thu, 20 Jan 2022 14:11:54 +0800" class=no-wrap>
+Thu, 20 Jan 2022 14:11:54 +0800</relative-time>
+<span class=file-info-divider></span>
+Modified <relative-time datetime="Fri, 28 Jan 2022 08:28:14 +0000" class=no-wrap>
+Fri, 28 Jan 2022 08:28:14 +0000</relative-time>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-lg px-3 new-discussion-timeline">
+<div class="repository-content gist-content">
+<div>
+<div class="js-gist-file-update-container js-task-list-container file-box">
+<div id=file-pytest class="file my-2">
+<div id=post-header class="file-header d-flex flex-md-items-center flex-items-start sticky-header">
+<div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
+<div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+<summary id=toc-toggle class="btn btn-octicon m-0 mr-2 p-2" aria-haspopup=menu aria-label="Table of Contents" role=button><svg aria-hidden="true" viewBox="0 0 16 16" height="16" width="16" class="octicon octicon-list-unordered"><path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zm0 5a.75.75.0 000 1.5h8.5a.75.75.0 000-1.5h-8.5zM3 8A1 1 0 111 8a1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+</summary>
+5442 Words
+</div>
+<div class="file-actions flex-order-2 pt-0">
+</div>
+</div>
+</div>
+<div class="Box-body px-5 pb-5">
+<article class="markdown-body entry-content container-lg"><p>Android Navigation 是 Google Jetpack 里面的一个组件，支持 Android 应用里面的页面导航。</p>
+<p>在使用过程中，我们感受到如下的优点。</p>
+<ul>
+<li>页面跳转性能更好，在单 Activity 的架构下，都是 fragment 的切换，每次 fragment 被压栈之后，View 被销毁，相比之前 Activity 跳转，更加轻量，需要的内存更少。</li>
+<li>通过 Viewmodel 进行数据共享更便捷，不需要页面之间来回传数据。</li>
+<li>统一的 Navigation API 来更精细的控制跳转逻辑。</li>
+</ul>
+<h2 id=所有坑的中心>所有坑的中心</h2>
+<p>Navigation 相关的坑，都有个中心。一般情况下，Fragment 就是一个 View，View 的生命周期就是 Fragment 的生命周期，但是在 Navigation 的架构下，Fragment 的生命周期和 View 的生命周期是不一样的。当 navigate 到新的 UI，被覆盖的 UI，View 被销毁，但是保留了 fragment 实例（未被 destroy），当这个 fragment 被 resume 的时候，View 会被重新创建。这是“罪恶”之源。</p>
+<h3 id=1-databinding-需要-ondestroyview-设置为-null>1. Databinding 需要 onDestroyView 设置为 Null。</h3>
+<p>现在大家都会使用 Jetpack 里面的 databinding 技术，这个确实可以帮助我们简化很多代码，其中的自感知的生命周期，可以帮我们只有在必要的时候来更新 UI。</p>
+<p>一般会在 Fragment 的 onCreateView 模板函数中初始化 ViewDataBing，这样就会有 Fragment 持有对 View 的引用。但是 fragment 和 view 的生命周期是不一样的，当 view 被销毁的时候，fragment 并不一定被销毁，所以一定要在 fragment.onDestroyView 函数中把对 view 的引用变量设置为 null，不然会导致 view 回收不掉。 上一段官方的代码来说明一下。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>var</span> _binding: ResultProfileBinding? = <span style=color:#66d9ef>null</span>
+<span style=color:#75715e>// This property is only valid between onCreateView and
+</span><span style=color:#75715e>// onDestroyView.
+</span><span style=color:#75715e></span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> binding <span style=color:#66d9ef>get</span>() = _binding<span style=color:#f92672>!!</span>
+
+<span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onCreateView</span>(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+): View? {
+    _binding = ResultProfileBinding.inflate(inflater, container, <span style=color:#66d9ef>false</span>)
+    <span style=color:#66d9ef>val</span> view = binding.root
+    <span style=color:#66d9ef>return</span> view
+}
+
+<span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onDestroyView</span>() {
+    <span style=color:#66d9ef>super</span>.onDestroyView()
+    _binding = <span style=color:#66d9ef>null</span>
+}
+</code></pre></div><h3 id=2-当-databinding-遇到错的-lifecycle>2. 当 Databinding 遇到错的 lifecycle.</h3>
+<p>Databinding 确实很强大，能把数据和 UI 进行绑定，这里对 UI 就有个要求，UI 一定要知道自己的生命周期的，知道自己什么时候处于 Active 和 InActive 的状态。所以我们必须要给 databinding 设置一个正确的生命周期.</p>
+<p>下面来看一段有问题的代码：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onCreateView</span>(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+): View {
+    _binding = HomeFragmentBinding.inflate(inflater, container, <span style=color:#66d9ef>false</span>)
+    binding.lifecycleOwner = <span style=color:#66d9ef>this</span> <span style=color:#75715e>// 问题代码在这里！！！
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> binding.root
+}
+</code></pre></div><p>这段代码运行起来没有问题，看起来都是按照预期的在执行。甚至官方代码也是这么写的。连 LeakCanary 也检测不出来内存泄漏的问题，LeakCanary 只能检测出来一些 Activity，Fragment 和 View 等实例的内存泄漏，对于普通的类的实例是没有办法分析的。</p>
+<p>问题就出现在 databinding 遇到了一个错的 lifecycle，在没有用 Navigation 框架的时候，View 的生命周期和 Fragment 的生命周期一致的，但是在 Navigation 框架下，两者的生命周期是不一致的。我们来看下 ViewDataBinding 设置 lifecycleOwner 的具体代码。</p>
+<p>下面的代码中，往这个 lifecycleOwner 里面加入了一个 OnStartListener 实例，因为这个 lifecycleOwner 是 fragment 的，会在 fragment 销毁的时候反注册，但是并不会在 View 被销毁的时候被反注册。而 OnStartListener 有对这个 ViewDataBinding 有引用，会导致 View 被销毁的时候（跳到另外一个页面），这个引用会阻止系统回收这个 View。</p>
+<p>这个分析逻辑是对的，但是结果是不对的，系统还是会对这个 View 进行回收，因为 OnStartListener 的实例持有的是对这个 View 的弱引用，这个 View 还是会被回收。这就是 LeakCanary 没有报错的原因。但是这个 OnStartListener 的实例，就没这么幸运了，正是这个实例无法回收导致了内存泄漏。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#a6e22e>@MainThread</span>
+<span style=color:#66d9ef>public</span> void setLifecycleOwner(<span style=color:#a6e22e>@Nullable</span> LifecycleOwner lifecycleOwner) {
+    <span style=color:#66d9ef>if</span> (mLifecycleOwner <span style=color:#f92672>==</span> lifecycleOwner) {
+        <span style=color:#66d9ef>return</span>;
+    }
+    <span style=color:#66d9ef>if</span> (mLifecycleOwner <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>) {
+        mLifecycleOwner.getLifecycle().removeObserver(mOnStartListener);
+    }
+    mLifecycleOwner = lifecycleOwner;
+    <span style=color:#66d9ef>if</span> (lifecycleOwner <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>) {
+        <span style=color:#66d9ef>if</span> (mOnStartListener <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span>) {
+            mOnStartListener = new OnStartListener(<span style=color:#66d9ef>this</span>);
+            <span style=color:#75715e>// 这个实例持有了ViewDataBinging的实例，虽然是弱引用。
+</span><span style=color:#75715e></span>        }
+        lifecycleOwner.getLifecycle().addObserver(mOnStartListener);
+        <span style=color:#75715e>// 问题出现在这里，如果这个lifecycle是fragment的，View被销毁了，里面不会进行反注册。
+</span><span style=color:#75715e></span>    }
+    <span style=color:#66d9ef>for</span> (WeakListener&lt;?&gt; weakListener : mLocalFieldObservers) {
+        <span style=color:#66d9ef>if</span> (weakListener <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>) {
+            weakListener.setLifecycleOwner(lifecycleOwner);
+        }
+    }
+}
+</code></pre></div><p>正确的做法是需要给这个 ViewDataBinding 设置 viewLifecycleOwner.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin>binding.lifecycleOwner = viewLifecycleOwner
+</code></pre></div><h3 id=3-glide-自我管理的生命周期值得信赖吗>3. Glide 自我管理的生命周期值得信赖吗？</h3>
+<p>Glide 是一个非常流行的图片加载框架，不得不说，Glide 的缓存这一块的设计非常的优秀，功能强大，可扩展强。 还有它的生命周期的自我管理，通过创建一个 fragment 在当前的页面，通过这个 fragment 的生命周期，实现在 onStart 的时候进行图片加载，在 onStop 的时候，把还没有执行或者没有执行完的任务缓存下来，以便在 onStart 的再执行，当然是在没有 onDestory 的情况下。</p>
+<p>一切都很完美，直到遇到了 Navigation。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin>Glide.with(fragment).load(url).into(imageview)
+</code></pre></div><p>呵呵，上面的这段，在 Navigation 的架构下，如果 Fragment 还在，但是执行了 onDestroyView，imageview 需要被销毁。这个情况下，如果图片加载任务没执行完，任务就会被缓存下来了。这个任务还有对需要被销毁的 imageview 有强引用，导致这个 imageview 销毁不了，从而内存泄漏。</p>
+<p>如何 100%的重现这个问题呢，有个简单的方法，让大家可以验证一下这个问题。 给这个任务，加一个图片的 transformation，这个 transformation 什么也不干，就是 sleep 3 秒钟，在这个 3 秒中之内，跳转到另一个页面。这会导致当前页面进行 View 的 destory，但是 fragment 并不会 destory，因为这个任务还没执行完，这个任务就会被 Glide 缓存，具体会被缓存位置为 RequestManager->RequestTracker->pendingRequests。</p>
+<p>如何来解决这个问题呢？这个没有现成的解决方法，在 Glide 的官网有提类似的问题，但是 Glide 维护者听起来还没有意识到这个问题，没有后续的计划。 当然，我们需要来解决这个问题，不然我们的代码就会存在这一点瑕疵了。</p>
+<p>解决的方法：自己来管理 Glide 的生命周期，不要通过那个看不见的 fragment 的生命周期，因为那是靠不住的。我们自己写了一个 RequestManager，通过传入的 fragment 的 viewLifecycleOwner 来进行管理。使用也很方便，在调用的时候如下即可。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>import</span> com.bumptech.glide.manager.Lifecycle <span style=color:#66d9ef>as</span> GlideLifecycle
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>KGlide</span> {
+
+    <span style=color:#66d9ef>companion</span> <span style=color:#66d9ef>object</span> {
+        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> lifecycleMap = ArrayMap&lt;LifecycleOwner, RequestManager&gt;()
+
+        <span style=color:#a6e22e>@MainThread</span>
+        <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>with</span>(fragment: Fragment): RequestManager {
+            Util.assertMainThread()
+
+            <span style=color:#66d9ef>val</span> lifecycleOwner = fragment.viewLifecycleOwner
+            <span style=color:#66d9ef>if</span> (lifecycleOwner.lifecycle.currentState <span style=color:#f92672>==</span> Lifecycle.State.DESTROYED) {
+                <span style=color:#66d9ef>throw</span> IllegalStateException(<span style=color:#e6db74>&#34;View is already destroyed.&#34;</span>)
+            }
+
+            <span style=color:#66d9ef>if</span> (lifecycleMap[lifecycleOwner] <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span>) {
+                <span style=color:#66d9ef>val</span> appContext = fragment.requireContext().applicationContext
+                lifecycleMap[lifecycleOwner] = RequestManager(
+                    Glide.<span style=color:#66d9ef>get</span>(appContext),
+                    KLifecycle(lifecycleOwner.lifecycle),
+                    KEmptyRequestManagerTreeNode(), appContext
+                )
+            }
+            <span style=color:#66d9ef>return</span> lifecycleMap[lifecycleOwner]<span style=color:#f92672>!!</span>
+        }
+    }
+
+    <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>KEmptyRequestManagerTreeNode</span> : RequestManagerTreeNode {
+        <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>getDescendants</span>(): Set&lt;RequestManager&gt; {
+            <span style=color:#66d9ef>return</span> emptySet()
+        }
+    }
+
+    <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>KLifecycle</span>(<span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> lifecycle: Lifecycle) : GlideLifecycle {
+        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> lifecycleListeners =
+            Collections.newSetFromMap(WeakHashMap&lt;LifecycleListener, Boolean&gt;())
+
+        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> lifecycleObserver = <span style=color:#66d9ef>object</span> <span style=color:#960050;background-color:#1e0010>: </span><span style=color:#a6e22e>DefaultLifecycleObserver</span> {
+            <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onStart</span>(owner: LifecycleOwner) {
+                <span style=color:#66d9ef>val</span> listeners = Util.getSnapshot(lifecycleListeners)
+                <span style=color:#66d9ef>for</span> (listener <span style=color:#66d9ef>in</span> listeners) {
+                    listener.onStart()
+                }
+            }
+
+            <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onStop</span>(owner: LifecycleOwner) {
+                <span style=color:#66d9ef>val</span> listeners = Util.getSnapshot(lifecycleListeners)
+                <span style=color:#66d9ef>for</span> (listener <span style=color:#66d9ef>in</span> listeners) {
+                    listener.onStop()
+                }
+            }
+
+            <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onDestroy</span>(owner: LifecycleOwner) {
+                <span style=color:#66d9ef>val</span> listeners = Util.getSnapshot(lifecycleListeners)
+                <span style=color:#66d9ef>for</span> (listener <span style=color:#66d9ef>in</span> listeners) {
+                    listener.onDestroy()
+                }
+
+                lifecycleMap.remove(owner)
+                lifecycleListeners.clear()
+                lifecycle.removeObserver(<span style=color:#66d9ef>this</span>)
+            }
+        }
+
+        <span style=color:#66d9ef>init</span> {
+            lifecycle.addObserver(lifecycleObserver)
+        }
+
+        <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>addListener</span>(listener: LifecycleListener) {
+            lifecycleListeners.add(listener)
+            <span style=color:#66d9ef>when</span> (lifecycle.currentState) {
+                Lifecycle.State.STARTED, Lifecycle.State.RESUMED <span style=color:#f92672>-&gt;</span> listener.onStart()
+                Lifecycle.State.DESTROYED <span style=color:#f92672>-&gt;</span> listener.onDestroy()
+                <span style=color:#66d9ef>else</span> <span style=color:#f92672>-&gt;</span> listener.onStop()
+            }
+        }
+
+        <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>removeListener</span>(listener: LifecycleListener) {
+            lifecycleListeners.remove(listener)
+        }
+    }
+}
+</code></pre></div><h3 id=4-android-组件的生命周期自我管理值得信任吗>4. Android 组件的生命周期自我管理值得信任吗？</h3>
+<p>不值得，信任需要我们对 Android 生命周期的管理细节足够的了解。没有足够的了解，哪里来的信任，也就是盲目的信任。</p>
+<p>我们在 Android 官方文档里面应该看到过 LiveData 的介绍，下面摘录一段。</p>
+<blockquote>
+<p>Livedata is an observable data holder class. Unlike a regular observable, LiveData is lifecycle-aware, meaning it respects the lifecycle of other app components, such as activities, fragments, or services. This awareness ensures LiveData only updates app component observers that are in an active lifecycle state.</p>
+</blockquote>
+<p>然后还向我们说明 Livedata 的不会导致内存泄漏。</p>
+<blockquote>
+<p>This is especially useful for activities and fragments because they can safely observe LiveData objects and not worry about leaks—activities and fragments are instantly unsubscribed when their lifecycles are destroyed.</p>
+</blockquote>
+<p>写的很清楚，言之昭昭啊。如果你相信了官方文档的介绍，就 too young，too simple 了。LiveData 未必会在 lifecycleOwner 销毁的时候进行反注册，内存泄漏还是会发生。我们看一段 LiveData 会产生内存泄漏的代码。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>HomeFragment</span> : Fragment() {
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> model: NavigationViewModel <span style=color:#66d9ef>by</span> viewModels()
+
+    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onCreateView</span>(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        <span style=color:#66d9ef>return</span> inflater.inflate(R.layout.home_fragment, container, <span style=color:#66d9ef>false</span>)
+    }
+
+    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>onViewCreated</span>(view: View, savedInstanceState: Bundle?) {
+        <span style=color:#66d9ef>super</span>.onViewCreated(view, savedInstanceState)
+        model.getTextValue().observe(viewLifecycleOwner){
+            view.findViewById&lt;Button&gt;(R.id.text).text = <span style=color:#66d9ef>it</span>
+        }
+
+        <span style=color:#66d9ef>if</span> (isXXX()) {
+            findNavController().navigate(R.id.next_action)
+        }
+    }
+}
+</code></pre></div><p>当你进入某个页面，发现需要导航到另一个页面，这个时候就需要很小心。如果像上面这样的写法，就会导致内存泄漏。</p>
+<p>这个 Case 里，在 Fragment.onViewCreated()的模板方法，监听了一个 LiveData，这会导致这个 LiveData 持有外面对象的引用。理想情况下，这个 LivaData 会在 LifecycleOwner 在 onDestory 的时候进行反注册，但是在一些情况下，这个反注册就不会进行。</p>
+<p>如上代码的情况下，如果这个页面马上跳到 next_action 的页面，之前订阅的 LiveData 就不会进行反注册。原因出在当跳出这个页面的时候，页面还处于生命周期的状态 INITIALIZED，但是反注册的条件是这个页面的生命周期状态至少是 CREATED.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin>void performDestroyView() {
+    mChildFragmentManager.dispatchDestroyView();
+    <span style=color:#66d9ef>if</span> (mView <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>&amp;&amp;</span> mViewLifecycleOwner.getLifecycle().getCurrentState()
+                    .isAtLeast(Lifecycle.State.CREATED)) {
+        mViewLifecycleOwner.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
+    }
+    <span style=color:#f92672>......</span>
+}
+</code></pre></div><p>其实 Android 的生命周期管理还是值得信任的，前提是我们得彻底搞清楚状态流转的细节。</p>
+<h3 id=5-当-viewpager2-遇到-navigation>5. 当 ViewPager2 遇到 Navigation</h3>
+<p>ViewPager 是在应用开发的过程中，高频的用到的组件。Android 的官网有对基本的使用有详细的介绍。</p>
+<p>一直都很美好，直到遇到 Navigation。</p>
+<p>让我们来看官方例子里面 ViewPager2 的 Adapter 的类的声明。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DemoCollectionAdapter</span>(fragment: Fragment) : FragmentStateAdapter(fragment) {
+
+    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>getItemCount</span>(): Int = <span style=color:#ae81ff>100</span>
+
+    <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>createFragment</span>(position: Int): Fragment {
+        <span style=color:#75715e>// Return a NEW fragment instance in createFragment(int)
+</span><span style=color:#75715e></span>        <span style=color:#66d9ef>val</span> fragment = DemoObjectFragment()
+        fragment.arguments = Bundle().apply {
+            <span style=color:#75715e>// Our object is just an integer :-P
+</span><span style=color:#75715e></span>            putInt(ARG_OBJECT, position + <span style=color:#ae81ff>1</span>)
+        }
+        <span style=color:#66d9ef>return</span> fragment
+    }
+}
+</code></pre></div><p>不避讳的说，我们实际项目中的代码，也犯了同样的问题。不是说官网的写法有问题，而是在 Navigation 的框架下，才会导致的内存泄漏问题。这个泄漏是如何发生的呢？ 我们来看一下 FragmentStateAdapter 的构造函数。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#75715e>/**
+</span><span style=color:#75715e> * @param fragment if the {@link ViewPager2} lives directly in a {@link Fragment} subclass.
+</span><span style=color:#75715e> *
+</span><span style=color:#75715e> * @see FragmentStateAdapter#FragmentStateAdapter(FragmentActivity)
+</span><span style=color:#75715e> * @see FragmentStateAdapter#FragmentStateAdapter(FragmentManager, Lifecycle)
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>public</span> FragmentStateAdapter(<span style=color:#a6e22e>@NonNull</span> Fragment fragment) {
+    <span style=color:#66d9ef>this</span>(fragment.getChildFragmentManager(), fragment.getLifecycle());
+}
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * @param fragmentManager of {@link ViewPager2}&#39;s host
+</span><span style=color:#75715e> * @param lifecycle of {@link ViewPager2}&#39;s host
+</span><span style=color:#75715e> *
+</span><span style=color:#75715e> * @see FragmentStateAdapter#FragmentStateAdapter(FragmentActivity)
+</span><span style=color:#75715e> * @see FragmentStateAdapter#FragmentStateAdapter(Fragment)
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>public</span> FragmentStateAdapter(<span style=color:#a6e22e>@NonNull</span> FragmentManager fragmentManager,
+        <span style=color:#a6e22e>@NonNull</span> Lifecycle lifecycle) {
+    mFragmentManager = fragmentManager;
+    mLifecycle = lifecycle;
+    <span style=color:#66d9ef>super</span>.setHasStableIds(<span style=color:#66d9ef>true</span>);
+}
+</code></pre></div><p>可以看到 FragmentStateAdapter 最终会走两个参数的构造函数。第一个是 fragmentManager of ViewPager2&rsquo;s Host，第二个参数是 lifecycle of ViewPager2&rsquo;s host。 如果你看懂了之前的问题，你就会知道这个问题出在哪里了。在 Navigation 下面，fragment 和 view 的生命周期是不一致的，如果我们在 FragmentStateAdapter 的构造函数中，只传入 fragment 的实例的话，第二个参数 lifecycle 用的是第一个参数 fragment 的 lifecycle。 但是很显然，viewpager2&rsquo;s host 的 lifecycleOwner 是 fragment 的 viewlifecycleOwner，而不是其本身。</p>
+<p>具体导致的问题是，在 ViewPager2 实例被销毁的时候，对应的 FragmentStateAdapter 并不会被销毁，因为如果只传一个参数的话，使用的是 Fragment 的生命周期，只有在 fragment 退出的时候，才会被销毁。</p>
+<p>这里多说一句啊，FragmentStateAdapter 实例不能被设置到多个 ViewPager2 的对象，所以当 ViewPager2 被重建的时候，这个 Adapter 不能被重用。</p>
+<p>这些问题其实很难被发现，LeakCanary 也不能发现。幸好我们有个工具，在每个需要被检查的类的构造函数里面进行记录，然后在类的 finalize 方法对这个记录进行处理，如果发现某个类一直被构造，但是不执行 finalize 方法，这个类就需要被好好关照了。</p>
+<h3 id=6-viewpager2-设置-adapter-导致的-fragment-重建问题>6. ViewPager2 设置 Adapter 导致的 Fragment 重建问题</h3>
+<p>先来看以下的代码片段：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>val</span> viewPager2: ViewPager2 = <span style=color:#f92672>......</span>
+<span style=color:#66d9ef>val</span> adapter: FragmentStateAdapter = <span style=color:#f92672>......</span>
+viewPager2.adapter = adapter
+model.getContentList.observe(viewLifecycleOwner) {
+    adapter.<span style=color:#66d9ef>data</span> = <span style=color:#66d9ef>it</span>
+    adapter.notifyDataSetChanged()
+}
+</code></pre></div><p>大家应该看不出来这段代码的问题所在的吧，这个是非常常规的写法。当然这段代码在非 Navigation 的架构下面是没有问题的。但是如果在 Navigation 的架构下，就会有比较严重的问题了。</p>
+<p>说明一下问题出现的场景，如果用户先进入这个页面，执行上面代码，viewpager 正常显示。然后注意，重要的步骤来了，在这个页面上，导航到另外一个页面。那当前的这个页面会执行 fragment 的 onStop，注意并不会执行 onDestory。但是会执行 onDestoryView，也就是说 viewPager 将会被销毁，但是 fragment 被保留了。</p>
+<p>那如果重新回到这个页面会发生什么事情呢，之前 onStop 的 fragment 会执行 onStart，包括 Adatper 里面生成的 fragment 也会进行重建，并创建 View。</p>
+<p>出人意料的事情发生了，Adatper 里面的 fragment 在重建完成之后，立刻又被销毁掉了，这里的销毁是真正的销毁，执行了 onDestory 方法。然一个新的 fragment 被重新创建出来，这就是 fragment 重建问题。是什么导致了这个问题呢？</p>
+<p>具体执行销毁 Fragment 的代码如下，在 FragmentStateAdapter 的 gcFragments 的方法。</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin>void gcFragments() {
+    <span style=color:#66d9ef>if</span> (!mHasStaleFragments <span style=color:#f92672>||</span> shouldDelayFragmentTransactions()) {
+        <span style=color:#66d9ef>return</span>;
+    }
+
+    <span style=color:#75715e>// Remove Fragments for items that are no longer part of the data-set
+</span><span style=color:#75715e></span>    Set&lt;Long&gt; toRemove = new ArraySet&lt;&gt;();
+    <span style=color:#66d9ef>for</span> (int ix = <span style=color:#ae81ff>0</span>; ix &lt; mFragments.size(); ix<span style=color:#f92672>++</span>) {
+        long itemId = mFragments.keyAt(ix);
+        <span style=color:#66d9ef>if</span> (!containsItem(itemId)) {
+            toRemove.add(itemId);
+            mItemIdToViewHolder.remove(itemId); <span style=color:#75715e>// in case they&#39;re still bound
+</span><span style=color:#75715e></span>        }
+    }
+
+    <span style=color:#75715e>// Remove Fragments that are not bound anywhere -- pending a grace period
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>if</span> (!mIsInGracePeriod) {
+        mHasStaleFragments = <span style=color:#66d9ef>false</span>; <span style=color:#75715e>// we&#39;ve executed all GC checks
+</span><span style=color:#75715e></span>
+        <span style=color:#66d9ef>for</span> (int ix = <span style=color:#ae81ff>0</span>; ix &lt; mFragments.size(); ix<span style=color:#f92672>++</span>) {
+            long itemId = mFragments.keyAt(ix);
+            <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!is</span>FragmentViewBound(itemId)) {
+                toRemove.add(itemId);
+            }
+        }
+    }
+
+    <span style=color:#66d9ef>for</span> (Long itemId : toRemove) {
+        removeFragment(itemId);
+    }
+}
+</code></pre></div><p>因为这个函数判断，之前 adapter 里面产生的 fragment 需要被回收，依据就是当前的 adatper.containsItem(id)的方法返回 false 了。 再提供一个信息，这个函数会在 viewpager2 设置 adatper 的时候被调用。到现在为止，答案已经出来了。因为在 viewpager2 设置 adatper 的时候，adatper 里面什么数据也没有的啊，containsItem 函数必然返回为空的啊，真相大白了。</p>
+<p>所以逻辑正确的代码应该如下：</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-kotlin data-lang=kotlin><span style=color:#66d9ef>val</span> viewPager2: ViewPager2 = <span style=color:#f92672>......</span>
+model.getContentList.observe(viewLifecycleOwner) {
+    <span style=color:#66d9ef>if</span><span style=color:#960050;background-color:#1e0010>（</span>viewPager2.adapter <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span><span style=color:#960050;background-color:#1e0010>）</span>{
+        <span style=color:#66d9ef>val</span> adapter: FragmentStateAdapter = <span style=color:#f92672>......</span>
+        adapter.<span style=color:#66d9ef>data</span> = <span style=color:#66d9ef>it</span>
+        viewPager2.adapter = adapter
+    } <span style=color:#66d9ef>else</span> {
+        viewPager2.adapter.<span style=color:#66d9ef>data</span> = <span style=color:#66d9ef>it</span>
+    }
+
+    adapter.notifyDataSetChanged()
+}
+</code></pre></div><p>这段代码解决问题就是，在 viewpager2 设置 adatper 之前，先把 adapter 填充进去数据，然后再进行设置。这样就可以解决在 gcFragments 里面因为 containsItem()函数返回 false，导致 fragment 被销毁的问题，其实这个 fragment 是可以被重用的。</p>
+<h3 id=7-在-navigation-的框架下手动进行-fragment-管理需要注意什么>7. 在 Navigation 的框架下，手动进行 Fragment 管理需要注意什么？</h3>
+<p>刚开始使用 Navigation，代码里还是会有一部分 Fragment 是手动管理的，通过 FragmentManager 的 Add/Replace/Remove 等操作。其实 Navigation 设计的一部分初衷，就是要用统一的导航操作来替代手动操作，虽然 Navigation 底层的操作也是通过 FragmentManager 来实现的。</p>
+<p>如果代码里面还是有手动管理的代码，需要特别注意就是手动操作的时机和方式。原因还是在 Navigation 的框架下，Fragment 和 View 的生命周期不一致导致的。 如果把操作 Fragment 的时机放在 ViewLifeCycle 的里面，就可能会造成一些意想不到的结果。</p>
+<p>假设 stack top-most 的页面返回之后，新处于 Stack 顶的页面，原先处于 Stop 的 Fragment 就会走 onStart，而整个 View 将会被重建。如果在 ViewLifeCycle 的生命周期里面去 Add or Replace 一个 fragment，就必须要判断，需要操作的 fragment 是否已经存在，如果这个 fragment 已经存在，又进行了一次 Add or Replace 操作，这个 fragment 将会被重建，原来的 fragment 将会被销毁，新的 fragment 会被创建，而 view 的生命周期将会走两次，导致不必要的性能损失。不仅仅是性能的损失，还会导致之前谈到的第 4 条问题，导致内存泄漏的问题。</p>
+<p>即使是注意到了这些问题，如果手动来判断情况，也会造成代码不必要的复杂，所以还是建议使用 Navigation 的框架来导航，而不是手动通过 FragmentManager 来进行操作。</p>
+<h3 id=8-navigation-的主持下fragment-和-view-分家了家产怎么分>8. Navigation 的主持下，Fragment 和 View 分家了，家产怎么分？</h3>
+<p>最后其实是个设计问题。View 是依附于 Fragment，从 Fragment 的 create 到 destory 的一生中，可能会伴随着多个 View 的实例，从 create 走到 destory。</p>
+<p>从而，我们需要考虑，哪些变量应该是属于 fragment 的，哪些变量应该属于 view 的。
+举一个例子，如果一个页面有一个列表，使用 recycleView 来实现，毫无疑问，recycleView 是属于 View 的，但是这个 recycleView 的 adapter 呢？如果这个 adapter 属于 view，那 adapter 的实例将会随着这个 recycleview 的创建而创建，消亡而消亡。如果把这个 adapter 放到 fragment，不管有多少个 View 实例将会被创建，用的就是 fragment 里面的 adapter，这样的设计，是不是会更好，更少的代价来实现需求。</p>
+<p>所以这个家产如何分，第一优先顺位是 fragment, 第二个顺位才是 view。放在 fragment 里面才会最大程度的重用对象，达到性能的最大化。</p>
+<blockquote>
+<p>作者：字节跳动技术团队<br>
+链接：https://juejin.cn/post/7002798538484613127<br>
+来源：稀土掘金<br>
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+</blockquote></article>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>window.onload=function(){const a=document.getElementById('post-header'),b=a.offsetHeight;document.documentElement.style.scrollPaddingTop=b+10+"px"};const tocToggleButton=document.getElementById("toc-toggle"),tippyInstance=tippy('#toc-toggle',{trigger:'click',content:'<div id="table-of-contents">\u003cnav id=\u0022TableOfContents\u0022\u003e\n  \u003cul\u003e\n    \u003cli\u003e\u003ca href=\u0022#所有坑的中心\u0022\u003e所有坑的中心\u003c/a\u003e\n      \u003cul\u003e\n        \u003cli\u003e\u003ca href=\u0022#1-databinding-需要-ondestroyview-设置为-null\u0022\u003e1. Databinding 需要 onDestroyView 设置为 Null。\u003c/a\u003e\u003c/li\u003e\n        \u003cli\u003e\u003ca href=\u0022#2-当-databinding-遇到错的-lifecycle\u0022\u003e2. 当 Databinding 遇到错的 lifecycle.\u003c/a\u003e\u003c/li\u003e\n        \u003cli\u003e\u003ca href=\u0022#3-glide-自我管理的生命周期值得信赖吗\u0022\u003e3. Glide 自我管理的生命周期值得信赖吗？\u003c/a\u003e\u003c/li\u003e\n        \u003cli\u003e\u003ca href=\u0022#4-android-组件的生命周期自我管理值得信任吗\u0022\u003e4. Android 组件的生命周期自我管理值得信任吗？\u003c/a\u003e\u003c/li\u003e\n        \u003cli\u003e\u003ca href=\u0022#5-当-viewpager2-遇到-navigation\u0022\u003e5. 当 ViewPager2 遇到 Navigation\u003c/a\u003e\u003c/li\u003e\n        \u003cli\u003e\u003ca href=\u0022#6-viewpager2-设置-adapter-导致的-fragment-重建问题\u0022\u003e6. ViewPager2 设置 Adapter 导致的 Fragment 重建问题\u003c/a\u003e\u003c/li\u003e\n        \u003cli\u003e\u003ca href=\u0022#7-在-navigation-的框架下手动进行-fragment-管理需要注意什么\u0022\u003e7. 在 Navigation 的框架下，手动进行 Fragment 管理需要注意什么？\u003c/a\u003e\u003c/li\u003e\n        \u003cli\u003e\u003ca href=\u0022#8-navigation-的主持下fragment-和-view-分家了家产怎么分\u0022\u003e8. Navigation 的主持下，Fragment 和 View 分家了，家产怎么分？\u003c/a\u003e\u003c/li\u003e\n      \u003c/ul\u003e\n    \u003c/li\u003e\n  \u003c/ul\u003e\n\u003c/nav\u003e</div>',allowHTML:!0,placement:'bottom-start',interactive:!0,arrow:!1,maxWidth:"none",onHide:function(){tocToggleButton.classList.remove("hover")},onShow:function(){tocToggleButton.classList.add("hover")},onShown:function(){if(selectTableOfContentsOption(),window.hasSetupTableOfContentsListeners)return;const a=document.getElementById("table-of-contents");a.addEventListener('click',function(){tippyInstance[0].hide()}),window.hasSetupTableOfContentsListeners=!0}});function selectTableOfContentsOption(){const a='table-of-contents-option-selected',b=document.querySelectorAll("#table-of-contents > nav > ul li");for(const d of b){const[c]=d.children;if(c.tagName.toLowerCase()!=='a')continue;window.location.href===c.href?c.classList.add(a):c.classList.remove(a)}}window.onhashchange=selectTableOfContentsOption</script>
+<div class="footer container-xl width-full p-responsive">
+<div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between flex-sm-items-center pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light">
+<a aria-label=Homepage title=GitHub class="footer-octicon d-none d-lg-block mr-lg-4" href=https://chenjiuling.github.io/><svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+<ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+<li class="mr-3 mr-lg-0">Theme by <a href=https://github.com/MeiK2333/github-style>github-style</a></li>
+</ul>
+</div>
+<div class="d-flex flex-justify-center pb-6">
+<span class="f6 text-gray-light"></span>
+</div>
+</div>
+</body>
+<script type=application/javascript src=https://chenjiuling.github.io/js/github-style.js></script>
+</html>
