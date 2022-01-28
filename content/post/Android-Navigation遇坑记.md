@@ -1,17 +1,15 @@
 ---
 title: "Android-Navigation遇坑记"
-date: 2022-01-28T14:11:54+08:00
+date: 2022-01-20T14:11:54+08:00
 draft: false
 ---
 Android Navigation 是 Google Jetpack 里面的一个组件，支持 Android 应用里面的页面导航。
 
 在使用过程中，我们感受到如下的优点。
-
+<!--more-->
 - 页面跳转性能更好，在单 Activity 的架构下，都是 fragment 的切换，每次 fragment 被压栈之后，View 被销毁，相比之前 Activity 跳转，更加轻量，需要的内存更少。
 - 通过 Viewmodel 进行数据共享更便捷，不需要页面之间来回传数据。
 - 统一的 Navigation API 来更精细的控制跳转逻辑。
-
-<!--more-->
 
 ## 所有坑的中心
 Navigation 相关的坑，都有个中心。一般情况下，Fragment 就是一个 View，View 的生命周期就是 Fragment 的生命周期，但是在 Navigation 的架构下，Fragment 的生命周期和 View 的生命周期是不一样的。当 navigate 到新的 UI，被覆盖的 UI，View 被销毁，但是保留了 fragment 实例（未被 destroy），当这个 fragment 被 resume 的时候，View 会被重新创建。这是“罪恶”之源。
